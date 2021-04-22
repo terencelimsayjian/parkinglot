@@ -2,6 +2,7 @@ package com.terence.parking.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ParkingLotRepository {
   private static List<ParkingSpot> carLots;
@@ -65,6 +66,32 @@ public class ParkingLotRepository {
   }
 
   public static String exit(String vehicleNumber) {
+    Optional<ParkingSpot> optionalCarParkingSpot =
+        carLots.stream()
+            .filter(ps -> !ps.isVacant())
+            .filter(s -> s.getVehicleNumber().equals(vehicleNumber))
+            .findFirst();
+
+    if (optionalCarParkingSpot.isPresent()) {
+      ParkingSpot parkingSpot = optionalCarParkingSpot.get();
+      String timestamp = parkingSpot.getTimestamp();
+      parkingSpot.leave();
+      return timestamp;
+    }
+
+    Optional<ParkingSpot> optionalMotorcycleParkingSpot =
+        motorcycleLots.stream()
+            .filter(ps -> !ps.isVacant())
+            .filter(s -> s.getVehicleNumber().equals(vehicleNumber))
+            .findFirst();
+
+    if (optionalMotorcycleParkingSpot.isPresent()) {
+      ParkingSpot parkingSpot = optionalMotorcycleParkingSpot.get();
+      String timestamp = parkingSpot.getTimestamp();
+      parkingSpot.leave();
+      return timestamp;
+    }
+
     return null;
   }
 }

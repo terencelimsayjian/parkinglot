@@ -50,6 +50,18 @@ class ParkingLotRepositoryTest {
   }
 
   @Test
+  void shouldReturnTimestampWhenExitingCarpark() throws Exception {
+    ParkingLotRepository.initialise(1, 1);
+
+    String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
+    assertEquals("CarLot1", firstParkedCarSpace);
+
+    String timestamp = ParkingLotRepository.exit("SGX1234A");
+    assertEquals("1613541902", timestamp);
+  }
+
+
+  @Test
   void shouldReturnIdOfMotorcycleWhenParkedSuccessfully() throws Exception {
     ParkingLotRepository.initialise(3, 3);
 
@@ -79,5 +91,16 @@ class ParkingLotRepositoryTest {
         () -> ParkingLotRepository.park("motorcycle", "WWW5555A", "1613541902"));
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
+  }
+
+  @Test
+  void shouldReturnTimestampWhenMotorcycleExitsCarpark() throws Exception {
+    ParkingLotRepository.initialise(1, 1);
+
+    String firstParkedCarSpace = ParkingLotRepository.park("motorcycle", "SGX1234A", "1613541902");
+    assertEquals("MotorcycleLot1", firstParkedCarSpace);
+
+    String timestamp = ParkingLotRepository.exit("SGX1234A");
+    assertEquals("1613541902", timestamp);
   }
 }
