@@ -27,8 +27,16 @@ public class ParkingSpaceApplication {
       String firstLine = reader.readLine();
       String[] firstLineArray = firstLine.split(" ");
       ParkingLot.initialise(
-          new BaseVehicleParkingLot(Integer.parseInt(firstLineArray[0]), "CarLot", VehicleType.CAR),
-          new BaseVehicleParkingLot(Integer.parseInt(firstLineArray[1]), "MotorcycleLot", VehicleType.MOTORCYCLE));
+          new BaseVehicleParkingLot(
+              Integer.parseInt(firstLineArray[0]),
+              "CarLot",
+              VehicleType.CAR,
+              new HourlyFeeCalculator(BigDecimal.valueOf(2))),
+          new BaseVehicleParkingLot(
+              Integer.parseInt(firstLineArray[1]),
+              "MotorcycleLot",
+              VehicleType.MOTORCYCLE,
+              new HourlyFeeCalculator(BigDecimal.ONE)));
 
       reader.lines().map(ParkingSpaceApplication::processLine).forEach(System.out::println);
 
@@ -62,29 +70,10 @@ public class ParkingSpaceApplication {
       String vehicleNumber = s[1];
       String timestamp = s[2];
 
-      ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber);
-      String startinTimestamp = parkingSummary.getTimestamp();
-      String lotId = parkingSummary.getLotId();
-      VehicleType vehicleTypeEnum = parkingSummary.getVehicleTypeEnum();
-
-      long startingTimestamp = Long.parseLong(startinTimestamp);
       long endingTimestamp = Long.parseLong(timestamp);
-      BigDecimal charge = BigDecimal.ONE;
+      ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber, endingTimestamp);
 
-      switch (vehicleTypeEnum) {
-        case CAR:
-          FeeCalculator carFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(2));
-          charge = carFeeCalculator.calculate(startingTimestamp, endingTimestamp);
-          break;
-        case MOTORCYCLE:
-          FeeCalculator motorcycleFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(1));
-          charge = motorcycleFeeCalculator.calculate(startingTimestamp, endingTimestamp);
-          break;
-        default:
-          // Throw Unsupported vehicle exception
-      }
-
-      output = lotId + " " + charge.setScale(0);
+      output = parkingSummary.getLotId() + " " + parkingSummary.getParkingFee().setScale(0);
     }
 
     return output;

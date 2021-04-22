@@ -25,9 +25,9 @@ public class ParkingLot {
     return park;
   }
 
-  public static ParkingSummary exit(String vehicleNumber) {
+  public static ParkingSummary exit(String vehicleNumber, long endTimeEpochSeconds) {
     VehicleType vehicleType = vehicleLookup.get(vehicleNumber);
-    return getVehicleParkingLot(vehicleType).exit(vehicleNumber);
+    return getVehicleParkingLot(vehicleType).exit(vehicleNumber, endTimeEpochSeconds);
   }
 
   private static VehicleParkingLot getVehicleParkingLot(VehicleType vehicleTypeEnum) {
