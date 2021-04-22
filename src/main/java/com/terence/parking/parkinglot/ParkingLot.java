@@ -11,16 +11,15 @@ public class ParkingLot {
 
   private ParkingLot() {}
 
-  public static void initialise(int carCapacity, int motorcycleCapacity) {
+  public static void initialise(VehicleParkingLot carLot, VehicleParkingLot motorCycleLot) {
     vehicleLookup = new HashMap<>();
 
-    carParkingLot = new BaseVehicleParkingLot(carCapacity, "CarLot", VehicleType.CAR);
-    motorCycleParkingLot =
-        new BaseVehicleParkingLot(motorcycleCapacity, "MotorcycleLot", VehicleType.MOTORCYCLE);
+    carParkingLot = carLot;
+    motorCycleParkingLot = motorCycleLot;
   }
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
-      throws CarParkFullException {
+      throws ParkingLotFullException {
     String park = getVehicleParkingLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
     vehicleLookup.put(vehicleNumber, vehicleTypeEnum);
     return park;
@@ -39,7 +38,7 @@ public class ParkingLot {
         return motorCycleParkingLot;
       default:
         return carParkingLot;
-      // TODO: Throw new exception
+        // TODO: Throw new exception
     }
   }
 }

@@ -32,7 +32,7 @@ class BaseVehicleParkingLotTest {
 
     String firstParkedCarSpace = carVehicleParkingLot.park("SGX1234A", "1613541902");
     assertThrows(
-        CarParkFullException.class,
+        ParkingLotFullException.class,
         () -> carVehicleParkingLot.park("WWW5555A", "1613541902"));
 
     assertEquals("CarLot1", firstParkedCarSpace);

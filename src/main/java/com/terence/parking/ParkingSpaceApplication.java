@@ -1,6 +1,7 @@
 package com.terence.parking;
 
-import com.terence.parking.parkinglot.CarParkFullException;
+import com.terence.parking.parkinglot.BaseVehicleParkingLot;
+import com.terence.parking.parkinglot.ParkingLotFullException;
 import com.terence.parking.parkinglot.ParkingLot;
 import com.terence.parking.parkinglot.ParkingSpotInfo;
 import com.terence.parking.parkinglot.VehicleType;
@@ -23,7 +24,8 @@ public class ParkingSpaceApplication {
       String firstLine = reader.readLine();
       String[] firstLineArray = firstLine.split(" ");
       ParkingLot.initialise(
-          Integer.parseInt(firstLineArray[0]), Integer.parseInt(firstLineArray[1]));
+          new BaseVehicleParkingLot(Integer.parseInt(firstLineArray[0]), "CarLot", VehicleType.CAR),
+          new BaseVehicleParkingLot(Integer.parseInt(firstLineArray[1]), "MotorcycleLot", VehicleType.MOTORCYCLE));
 
       reader.lines().map(ParkingSpaceApplication::processLine).forEach(System.out::println);
 
@@ -49,7 +51,7 @@ public class ParkingSpaceApplication {
       try {
         lotId = ParkingLot.park(vehicleNumber, timestamp, vehicle);
         output = "Accept " + lotId;
-      } catch (CarParkFullException e) {
+      } catch (ParkingLotFullException e) {
         output = "Reject";
       }
 
