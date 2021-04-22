@@ -23,7 +23,8 @@ public class ParkingLotRepository {
     }
   }
 
-  public static String park(String vehicleType, String vehicleNumber, String timestamp) {
+  public static String park(String vehicleType, String vehicleNumber, String timestamp)
+      throws ParkingLotException {
 
     String prefix = "";
     int nextAvailableLot = 0;
@@ -41,7 +42,7 @@ public class ParkingLotRepository {
     return prefix + lotId;
   }
 
-  private static int getNextAvailableLot(String vehicleType) {
+  private static int getNextAvailableLot(String vehicleType) throws ParkingLotException {
     List<String> carparkLots = carLots;
     if (vehicleType.equals("car")) {
       carparkLots = carLots;
@@ -56,6 +57,6 @@ public class ParkingLotRepository {
       }
     }
 
-    return 0;
+    throw new ParkingLotException();
   }
 }

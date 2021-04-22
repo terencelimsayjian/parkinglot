@@ -1,5 +1,6 @@
 package com.terence.parking;
 
+import com.terence.parking.repository.ParkingLotException;
 import com.terence.parking.repository.ParkingLotRepository;
 
 import java.io.BufferedReader;
@@ -40,9 +41,14 @@ public class ParkingSpaceApplication {
       String vehicleNumber = s[2];
       String timestamp = s[3];
 
-      String lotId = ParkingLotRepository.park(vehicleType, vehicleNumber, timestamp);
+      String lotId = null;
+      try {
+        lotId = ParkingLotRepository.park(vehicleType, vehicleNumber, timestamp);
+        output = "Accept " + lotId;
+      } catch (ParkingLotException e) {
+        output = "Reject";
+      }
 
-      output = "Accept " + lotId;
     } else if (command.equals("Exit")) {
 
     }
