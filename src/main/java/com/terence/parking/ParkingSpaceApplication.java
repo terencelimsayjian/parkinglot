@@ -1,5 +1,6 @@
 package com.terence.parking;
 
+import com.terence.parking.feecalculation.FeeCalculator;
 import com.terence.parking.feecalculation.HourlyFeeCalculator;
 import com.terence.parking.parkinglot.BaseVehicleParkingLot;
 import com.terence.parking.parkinglot.ParkingLotFullException;
@@ -72,11 +73,11 @@ public class ParkingSpaceApplication {
 
       switch (vehicleTypeEnum) {
         case CAR:
-          HourlyFeeCalculator carFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(2));
+          FeeCalculator carFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(2));
           charge = carFeeCalculator.calculate(startingTimestamp, endingTimestamp);
           break;
         case MOTORCYCLE:
-          HourlyFeeCalculator motorcycleFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(1));
+          FeeCalculator motorcycleFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(1));
           charge = motorcycleFeeCalculator.calculate(startingTimestamp, endingTimestamp);
           break;
         default:

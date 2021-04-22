@@ -3,15 +3,14 @@ package com.terence.parking.feecalculation;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class HourlyFeeCalculator {
-  public static final BigDecimal MINUTES_IN_HOUR = BigDecimal.valueOf(60);
-  public static final BigDecimal SECONDS_IN_MINUTE = BigDecimal.valueOf(60);
+public class HourlyFeeCalculator implements FeeCalculator {
   private final BigDecimal hourlyRate;
 
   public HourlyFeeCalculator(BigDecimal hourlyRate) {
     this.hourlyRate = hourlyRate;
   }
 
+  @Override
   public BigDecimal calculate(long startTimeEpochSeconds, long endTimeEpochSeconds) {
 
     BigDecimal start = BigDecimal.valueOf(startTimeEpochSeconds);
