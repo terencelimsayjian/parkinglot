@@ -27,26 +27,11 @@ public class ParkingLot {
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
       throws ParkingLotException {
 
-    int nextAvailableLot = 0;
-
-    switch (vehicleTypeEnum) {
-      case CAR:
-        nextAvailableLot = getNextAvailableLot(vehicleTypeEnum);
-
-        ParkingSpot availableCarParkingSpot = carLots.get(nextAvailableLot);
-        return availableCarParkingSpot.park(vehicleNumber, timestamp);
-      case MOTORCYCLE:
-        nextAvailableLot = getNextAvailableLot(vehicleTypeEnum);
-
-        ParkingSpot availableMotorcycleParkingSpot = motorcycleLots.get(nextAvailableLot);
-        return availableMotorcycleParkingSpot.park(vehicleNumber, timestamp);
-      default:
-        return "";
-        // Throw Unsupported vehicle exception
-    }
+    return getNextAvailableLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
   }
 
-  private static int getNextAvailableLot(VehicleType vehicleTypeEnum) throws ParkingLotException {
+  private static ParkingSpot getNextAvailableLot(VehicleType vehicleTypeEnum)
+      throws ParkingLotException {
     List<ParkingSpot> carparkLots = carLots;
     switch (vehicleTypeEnum) {
       case CAR:
@@ -62,7 +47,7 @@ public class ParkingLot {
     for (int i = 0; i < carparkLots.size(); i++) {
 
       if (carparkLots.get(i).isVacant()) {
-        return i;
+        return carparkLots.get(i);
       }
     }
 
