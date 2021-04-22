@@ -32,14 +32,17 @@ public class ParkingSpaceApplication {
       String firstLine = reader.readLine();
       String[] firstLineArray = firstLine.split(" ");
 
+      int carCapacity = Integer.parseInt(firstLineArray[0]);
+      int motorcycleCapacity = Integer.parseInt(firstLineArray[1]);
+
       ParkingLot.initialise(
           new BaseVehicleParkingLot(
-              Integer.parseInt(firstLineArray[0]),
+              carCapacity,
               CAR_LOT_ID_PREFIX,
               VehicleType.CAR,
               new HourlyFeeCalculator(BigDecimal.valueOf(2))),
           new BaseVehicleParkingLot(
-              Integer.parseInt(firstLineArray[1]),
+              motorcycleCapacity,
               MOTORCYCLE_LOT_ID_PREFIX,
               VehicleType.MOTORCYCLE,
               new HourlyFeeCalculator(BigDecimal.ONE)));
@@ -48,7 +51,6 @@ public class ParkingSpaceApplication {
 
     } catch (IOException e) {
       System.out.println("Something went wrong. Enter absolute path to file.");
-      return;
     }
   }
 
@@ -84,3 +86,4 @@ public class ParkingSpaceApplication {
     return output;
   }
 }
+

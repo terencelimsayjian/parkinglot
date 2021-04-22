@@ -17,6 +17,6 @@
 
 ```sh
 # Run
-java -jar build/libs/zendesk_parking_system-all.jar
+java -jar build/libs/zendesk_parking_system-all.jar <path_to_input_file>
 ```
 
