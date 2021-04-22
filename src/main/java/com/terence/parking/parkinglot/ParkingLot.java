@@ -13,7 +13,6 @@ public class ParkingLot {
 
   public static void initialise(VehicleParkingLot carLot, VehicleParkingLot motorCycleLot) {
     vehicleLookup = new HashMap<>();
-
     carParkingLot = carLot;
     motorCycleParkingLot = motorCycleLot;
   }

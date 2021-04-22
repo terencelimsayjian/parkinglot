@@ -15,6 +15,11 @@ import java.math.BigDecimal;
 
 public class ParkingSpaceApplication {
 
+  public static final String ENTER = "ENTER";
+  public static final String EXIT = "EXIT";
+  public static final String CAR_LOT_ID_PREFIX = "CarLot";
+  public static final String MOTORCYCLE_LOT_ID_PREFIX = "MotorcycleLot";
+
   public static void main(String[] args) {
     if (args.length != 1) {
       System.out.println("Invalid input. Only one argument expected.");
@@ -26,15 +31,16 @@ public class ParkingSpaceApplication {
 
       String firstLine = reader.readLine();
       String[] firstLineArray = firstLine.split(" ");
+
       ParkingLot.initialise(
           new BaseVehicleParkingLot(
               Integer.parseInt(firstLineArray[0]),
-              "CarLot",
+              CAR_LOT_ID_PREFIX,
               VehicleType.CAR,
               new HourlyFeeCalculator(BigDecimal.valueOf(2))),
           new BaseVehicleParkingLot(
               Integer.parseInt(firstLineArray[1]),
-              "MotorcycleLot",
+              MOTORCYCLE_LOT_ID_PREFIX,
               VehicleType.MOTORCYCLE,
               new HourlyFeeCalculator(BigDecimal.ONE)));
 
@@ -51,22 +57,21 @@ public class ParkingSpaceApplication {
     String command = s[0];
     String output = "";
 
-    if (command.equals("Enter")) {
+    if (command.equalsIgnoreCase(ENTER)) {
       String vehicleType = s[1];
       String vehicleNumber = s[2];
       String timestamp = s[3];
 
       VehicleType vehicle = VehicleType.valueOf(vehicleType.toUpperCase());
 
-      String lotId = null;
       try {
-        lotId = ParkingLot.park(vehicleNumber, timestamp, vehicle);
+        String lotId = ParkingLot.park(vehicleNumber, timestamp, vehicle);
         output = "Accept " + lotId;
       } catch (ParkingLotFullException e) {
         output = "Reject";
       }
 
-    } else if (command.equals("Exit")) {
+    } else if (command.equalsIgnoreCase(EXIT)) {
       String vehicleNumber = s[1];
       String timestamp = s[2];
 
