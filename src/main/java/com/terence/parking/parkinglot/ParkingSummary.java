@@ -1,11 +1,11 @@
 package com.terence.parking.parkinglot;
 
-public class ParkingSpotInfo {
+public class ParkingSummary {
   private final String lotId;
   private final String timestamp;
   private final VehicleType vehicleTypeEnum;
 
-  public ParkingSpotInfo(String lotId, String timestamp, VehicleType vehicleTypeEnum) {
+  public ParkingSummary(String lotId, String timestamp, VehicleType vehicleTypeEnum) {
     this.lotId = lotId;
     this.timestamp = timestamp;
     this.vehicleTypeEnum = vehicleTypeEnum;

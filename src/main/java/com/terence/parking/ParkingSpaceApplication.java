@@ -3,7 +3,7 @@ package com.terence.parking;
 import com.terence.parking.parkinglot.BaseVehicleParkingLot;
 import com.terence.parking.parkinglot.ParkingLotFullException;
 import com.terence.parking.parkinglot.ParkingLot;
-import com.terence.parking.parkinglot.ParkingSpotInfo;
+import com.terence.parking.parkinglot.ParkingSummary;
 import com.terence.parking.parkinglot.VehicleType;
 
 import java.io.BufferedReader;
@@ -59,10 +59,10 @@ public class ParkingSpaceApplication {
       String vehicleNumber = s[1];
       String timestamp = s[2];
 
-      ParkingSpotInfo parkingSpotInfo = ParkingLot.exit(vehicleNumber);
-      String startinTimestamp = parkingSpotInfo.getTimestamp();
-      String lotId = parkingSpotInfo.getLotId();
-      VehicleType vehicleTypeEnum = parkingSpotInfo.getVehicleTypeEnum();
+      ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber);
+      String startinTimestamp = parkingSummary.getTimestamp();
+      String lotId = parkingSummary.getLotId();
+      VehicleType vehicleTypeEnum = parkingSummary.getVehicleTypeEnum();
 
       long startingTimestamp = Long.parseLong(startinTimestamp);
       long endingTimestamp = Long.parseLong(timestamp);

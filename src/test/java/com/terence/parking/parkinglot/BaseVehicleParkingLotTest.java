@@ -56,9 +56,9 @@ class BaseVehicleParkingLotTest {
     String firstParkedCarSpace = carVehicleParkingLot.park("SGX1234A", "1613541902");
     assertEquals("CarLot1", firstParkedCarSpace);
 
-    ParkingSpotInfo parkingSpotInfo = carVehicleParkingLot.exit("SGX1234A");
-    assertEquals("1613541902", parkingSpotInfo.getTimestamp());
-    assertEquals("CarLot1", parkingSpotInfo.getLotId());
+    ParkingSummary parkingSummary = carVehicleParkingLot.exit("SGX1234A");
+    assertEquals("1613541902", parkingSummary.getTimestamp());
+    assertEquals("CarLot1", parkingSummary.getLotId());
   }
 
 }

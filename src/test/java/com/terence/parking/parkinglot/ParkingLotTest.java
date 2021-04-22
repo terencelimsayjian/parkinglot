@@ -15,8 +15,8 @@ class ParkingLotTest {
     String carpark1 = ParkingLot.park("V1", "timestamp1", VehicleType.CAR);
     String motorcyclePark3 = ParkingLot.park("V3", "timestamp3", VehicleType.MOTORCYCLE);
 
-    ParkingSpotInfo v1Exit = ParkingLot.exit("V1");
-    ParkingSpotInfo v3Exit = ParkingLot.exit("V3");
+    ParkingSummary v1Exit = ParkingLot.exit("V1");
+    ParkingSummary v3Exit = ParkingLot.exit("V3");
 
     String carpark2 = ParkingLot.park("V2", "timestamp2", VehicleType.CAR);
     String motorcyclePark4 = ParkingLot.park("V4", "timestamp4", VehicleType.MOTORCYCLE);
@@ -24,8 +24,8 @@ class ParkingLotTest {
     assertEquals("CarLot1", carpark1);
     assertEquals("MotorcycleLot1", motorcyclePark3);
 
-    assertParkingLotInfoCorrect(v1Exit, "CarLot1", "timestamp1", VehicleType.CAR);
-    assertParkingLotInfoCorrect(v3Exit, "MotorcycleLot1", "timestamp3", VehicleType.MOTORCYCLE);
+    assertParkingSummaryCorrect(v1Exit, "CarLot1", "timestamp1", VehicleType.CAR);
+    assertParkingSummaryCorrect(v3Exit, "MotorcycleLot1", "timestamp3", VehicleType.MOTORCYCLE);
 
     assertEquals("CarLot1", carpark2);
     assertEquals("MotorcycleLot1", motorcyclePark4);
@@ -53,7 +53,7 @@ class ParkingLotTest {
     assertEquals("CarLot2", carpark2);
   }
 
-  private void assertParkingLotInfoCorrect(ParkingSpotInfo v1Exit, String carLot1, String timestamp1, VehicleType car) {
+  private void assertParkingSummaryCorrect(ParkingSummary v1Exit, String carLot1, String timestamp1, VehicleType car) {
     assertEquals(carLot1, v1Exit.getLotId());
     assertEquals(timestamp1, v1Exit.getTimestamp());
     assertEquals(car, v1Exit.getVehicleTypeEnum());

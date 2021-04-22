@@ -25,7 +25,7 @@ public class ParkingLot {
     return park;
   }
 
-  public static ParkingSpotInfo exit(String vehicleNumber) {
+  public static ParkingSummary exit(String vehicleNumber) {
     VehicleType vehicleType = vehicleLookup.get(vehicleNumber);
     return getVehicleParkingLot(vehicleType).exit(vehicleNumber);
   }

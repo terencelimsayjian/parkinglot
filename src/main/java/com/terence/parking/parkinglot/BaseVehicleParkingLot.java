@@ -33,7 +33,7 @@ public class BaseVehicleParkingLot implements VehicleParkingLot {
   }
 
   @Override
-  public ParkingSpotInfo exit(String vehicleNumber) {
+  public ParkingSummary exit(String vehicleNumber) {
     Optional<ParkingSpot> optionalParkingSpot =
         parkingSpots.stream()
             .filter(ps -> !ps.isVacant())
@@ -42,11 +42,11 @@ public class BaseVehicleParkingLot implements VehicleParkingLot {
 
     if (optionalParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalParkingSpot.get();
-      ParkingSpotInfo parkingSpotInfo =
-          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), vehicleType);
+      ParkingSummary parkingSummary =
+          new ParkingSummary(parkingSpot.getId(), parkingSpot.getTimestamp(), vehicleType);
       parkingSpot.leave();
 
-      return parkingSpotInfo;
+      return parkingSummary;
     }
 
     return null;
