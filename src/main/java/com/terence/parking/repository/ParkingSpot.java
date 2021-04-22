@@ -4,10 +4,12 @@ class ParkingSpot {
 
   private String vehicleNumber;
   private String timestamp;
+  private String id;
 
-  ParkingSpot() {
+  ParkingSpot(String id) {
     vehicleNumber = null;
     timestamp = null;
+    this.id = id;
   }
 
   String getVehicleNumber() {
@@ -16,6 +18,10 @@ class ParkingSpot {
 
   String getTimestamp() {
     return timestamp;
+  }
+
+  public String getId() {
+    return id;
   }
 
   void park(String vehicleNumber, String timestamp) {

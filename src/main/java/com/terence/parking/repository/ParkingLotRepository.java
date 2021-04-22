@@ -16,11 +16,11 @@ public class ParkingLotRepository {
     motorcycleLots = new ArrayList<>(motorcycleCapacity);
 
     for (int i = 0; i < carCapacity; i++) {
-      carLots.add(new ParkingSpot());
+      carLots.add(new ParkingSpot(Integer.toString(i + 1)));
     }
 
     for (int i = 0; i < motorcycleCapacity; i++) {
-      motorcycleLots.add(new ParkingSpot());
+      motorcycleLots.add(new ParkingSpot(Integer.toString(i + 1)));
     }
   }
 
@@ -65,7 +65,7 @@ public class ParkingLotRepository {
     throw new ParkingLotException();
   }
 
-  public static String exit(String vehicleNumber) {
+  public static ParkingSpotInfo exit(String vehicleNumber) {
     Optional<ParkingSpot> optionalCarParkingSpot =
         carLots.stream()
             .filter(ps -> !ps.isVacant())
@@ -74,9 +74,9 @@ public class ParkingLotRepository {
 
     if (optionalCarParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalCarParkingSpot.get();
-      String timestamp = parkingSpot.getTimestamp();
+      ParkingSpotInfo parkingSpotInfo = new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp());
       parkingSpot.leave();
-      return timestamp;
+      return parkingSpotInfo;
     }
 
     Optional<ParkingSpot> optionalMotorcycleParkingSpot =
@@ -87,9 +87,9 @@ public class ParkingLotRepository {
 
     if (optionalMotorcycleParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalMotorcycleParkingSpot.get();
-      String timestamp = parkingSpot.getTimestamp();
+      ParkingSpotInfo parkingSpotInfo = new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp());
       parkingSpot.leave();
-      return timestamp;
+      return parkingSpotInfo;
     }
 
     return null;

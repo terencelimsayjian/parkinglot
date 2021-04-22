@@ -2,6 +2,7 @@ package com.terence.parking;
 
 import com.terence.parking.repository.ParkingLotException;
 import com.terence.parking.repository.ParkingLotRepository;
+import com.terence.parking.repository.ParkingSpotInfo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -53,7 +54,7 @@ public class ParkingSpaceApplication {
       String vehicleNumber = s[1];
       String timestamp = s[2];
 
-      String exitTimestamp = ParkingLotRepository.exit(vehicleNumber);
+      ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit(vehicleNumber);
     }
 
     return output;

@@ -56,8 +56,9 @@ class ParkingLotRepositoryTest {
     String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
     assertEquals("CarLot1", firstParkedCarSpace);
 
-    String timestamp = ParkingLotRepository.exit("SGX1234A");
-    assertEquals("1613541902", timestamp);
+    ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit("SGX1234A");
+    assertEquals("1613541902", parkingSpotInfo.getTimestamp());
+    assertEquals("1", parkingSpotInfo.getLotId());
   }
 
 
@@ -100,7 +101,8 @@ class ParkingLotRepositoryTest {
     String firstParkedCarSpace = ParkingLotRepository.park("motorcycle", "SGX1234A", "1613541902");
     assertEquals("MotorcycleLot1", firstParkedCarSpace);
 
-    String timestamp = ParkingLotRepository.exit("SGX1234A");
-    assertEquals("1613541902", timestamp);
+    ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit("SGX1234A");
+    assertEquals("1613541902", parkingSpotInfo.getTimestamp());
+    assertEquals("1", parkingSpotInfo.getLotId());
   }
 }
