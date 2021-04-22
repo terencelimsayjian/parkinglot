@@ -61,7 +61,6 @@ class ParkingLotTest {
     assertEquals("CarLot1", parkingSpotInfo.getLotId());
   }
 
-
   @Test
   void shouldReturnIdOfMotorcycleWhenParkedSuccessfully() throws Exception {
     ParkingLot.initialise(3, 3);
