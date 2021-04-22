@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLotRepository {
-  private static int CAR_CAPACITY;
-  private static int MOTORCYCLE_CAPACITY;
-
   private static List<String> carLots;
   private static List<String> motorcycleLots;
 
   private ParkingLotRepository() {}
 
   public static void initialise(int carCapacity, int motorcycleCapacity) {
-    CAR_CAPACITY = carCapacity;
-    MOTORCYCLE_CAPACITY = carCapacity;
 
     carLots = new ArrayList<>(carCapacity);
     motorcycleLots = new ArrayList<>(motorcycleCapacity);
@@ -29,8 +24,6 @@ public class ParkingLotRepository {
   }
 
   public static String park(String vehicleType, String vehicleNumber, String timestamp) {
-
-
 
     String prefix = "";
     int nextAvailableLot = 0;
@@ -65,6 +58,4 @@ public class ParkingLotRepository {
 
     return 0;
   }
-
-
 }
