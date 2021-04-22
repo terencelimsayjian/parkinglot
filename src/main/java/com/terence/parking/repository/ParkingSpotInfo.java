@@ -3,10 +3,12 @@ package com.terence.parking.repository;
 public class ParkingSpotInfo {
   private final String lotId;
   private final String timestamp;
+  private final String vehicleType;
 
-  public ParkingSpotInfo(String lotId, String timestamp) {
+  public ParkingSpotInfo(String lotId, String timestamp, String vehicleType) {
     this.lotId = lotId;
     this.timestamp = timestamp;
+    this.vehicleType = vehicleType;
   }
 
   public String getLotId() {
@@ -15,5 +17,9 @@ public class ParkingSpotInfo {
 
   public String getTimestamp() {
     return timestamp;
+  }
+
+  public String getVehicleType() {
+    return vehicleType;
   }
 }

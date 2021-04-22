@@ -41,7 +41,6 @@ public class ParkingLotRepository {
     } else {
       return "";
     }
-
   }
 
   private static int getNextAvailableLot(String vehicleType) throws ParkingLotException {
@@ -71,7 +70,8 @@ public class ParkingLotRepository {
 
     if (optionalCarParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalCarParkingSpot.get();
-      ParkingSpotInfo parkingSpotInfo = new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp());
+      ParkingSpotInfo parkingSpotInfo =
+          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), "car");
       parkingSpot.leave();
       return parkingSpotInfo;
     }
@@ -84,7 +84,8 @@ public class ParkingLotRepository {
 
     if (optionalMotorcycleParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalMotorcycleParkingSpot.get();
-      ParkingSpotInfo parkingSpotInfo = new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp());
+      ParkingSpotInfo parkingSpotInfo =
+          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), "motorcycle");
       parkingSpot.leave();
       return parkingSpotInfo;
     }

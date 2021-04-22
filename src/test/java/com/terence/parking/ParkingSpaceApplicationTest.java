@@ -60,7 +60,7 @@ class ParkingSpaceApplicationTest {
             + "Accept CarLot2\n"
             + "Accept CarLot3\n"
             + "Reject\n"
-            + "CarLot3 6";
+            + "CarLot3 6\n";
 
     assertEquals(expected, outContent.toString());
   }

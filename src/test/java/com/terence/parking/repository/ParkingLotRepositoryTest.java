@@ -104,5 +104,6 @@ class ParkingLotRepositoryTest {
     ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit("SGX1234A");
     assertEquals("1613541902", parkingSpotInfo.getTimestamp());
     assertEquals("MotorcycleLot1", parkingSpotInfo.getLotId());
+    assertEquals("motorcycle", parkingSpotInfo.getVehicleType());
   }
 }

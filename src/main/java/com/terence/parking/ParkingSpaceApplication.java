@@ -55,8 +55,22 @@ public class ParkingSpaceApplication {
       String timestamp = s[2];
 
       ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit(vehicleNumber);
-      String timestamp1 = parkingSpotInfo.getTimestamp();
+      String startinTimestamp = parkingSpotInfo.getTimestamp();
       String lotId = parkingSpotInfo.getLotId();
+      String vehicleType = parkingSpotInfo.getVehicleType();
+
+      long startingTimestamp = Long.parseLong(startinTimestamp);
+      long endingTimestamp = Long.parseLong(timestamp);
+      long numberOfHours = ((endingTimestamp - startingTimestamp) / 60) / 60 + 1;
+      long charge = 0;
+
+      if (vehicleType.equals("car")) {
+        charge = numberOfHours * 2;
+      } else if (vehicleType.equals("motorcycle")) {
+        charge = numberOfHours * 1;
+      }
+
+      output = lotId + " " + charge;
     }
 
     return output;
