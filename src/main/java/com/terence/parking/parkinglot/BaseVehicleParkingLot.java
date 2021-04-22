@@ -13,7 +13,7 @@ public class BaseVehicleParkingLot implements VehicleParkingLot {
     this.vehicleType = vehicleType;
 
     for (int i = 0; i < carCapacity; i++) {
-      parkingSpots.add(new ParkingSpot(idPrefix + Integer.toString(i + 1)));
+      parkingSpots.add(new ParkingSpot(idPrefix + (i + 1)));
     }
   }
 
