@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingLotRepository {
-  private static List<String> carLots;
-  private static List<String> motorcycleLots;
+  private static List<ParkingSpot> carLots;
+  private static List<ParkingSpot> motorcycleLots;
 
   private ParkingLotRepository() {}
 
@@ -15,11 +15,11 @@ public class ParkingLotRepository {
     motorcycleLots = new ArrayList<>(motorcycleCapacity);
 
     for (int i = 0; i < carCapacity; i++) {
-      carLots.add(null);
+      carLots.add(new ParkingSpot());
     }
 
     for (int i = 0; i < motorcycleCapacity; i++) {
-      motorcycleLots.add(null);
+      motorcycleLots.add(new ParkingSpot());
     }
   }
 
@@ -30,11 +30,15 @@ public class ParkingLotRepository {
     int nextAvailableLot = 0;
     if (vehicleType.equals("car")) {
       nextAvailableLot = getNextAvailableLot("car");
-      carLots.set(nextAvailableLot, vehicleNumber);
+
+      ParkingSpot availableParkingSpot = carLots.get(nextAvailableLot);
+      availableParkingSpot.park(vehicleNumber, timestamp);
       prefix = "CarLot";
     } else if (vehicleType.equals("motorcycle")) {
       nextAvailableLot = getNextAvailableLot("motorcycle");
-      motorcycleLots.set(nextAvailableLot, vehicleNumber);
+
+      ParkingSpot availableParkingSpot = motorcycleLots.get(nextAvailableLot);
+      availableParkingSpot.park(vehicleNumber, timestamp);
       prefix = "MotorcycleLot";
     }
 
@@ -43,7 +47,7 @@ public class ParkingLotRepository {
   }
 
   private static int getNextAvailableLot(String vehicleType) throws ParkingLotException {
-    List<String> carparkLots = carLots;
+    List<ParkingSpot> carparkLots = carLots;
     if (vehicleType.equals("car")) {
       carparkLots = carLots;
     } else if (vehicleType.equals("motorcycle")) {
@@ -52,11 +56,15 @@ public class ParkingLotRepository {
 
     for (int i = 0; i < carparkLots.size(); i++) {
 
-      if (carparkLots.get(i) == null) {
+      if (carparkLots.get(i).isVacant()) {
         return i;
       }
     }
 
     throw new ParkingLotException();
+  }
+
+  public static String exit(String vehicleNumber) {
+    return null;
   }
 }

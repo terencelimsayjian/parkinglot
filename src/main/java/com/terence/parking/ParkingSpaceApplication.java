@@ -50,7 +50,10 @@ public class ParkingSpaceApplication {
       }
 
     } else if (command.equals("Exit")) {
+      String vehicleNumber = s[1];
+      String timestamp = s[2];
 
+      String exitTimestamp = ParkingLotRepository.exit(vehicleNumber);
     }
 
     return output;
