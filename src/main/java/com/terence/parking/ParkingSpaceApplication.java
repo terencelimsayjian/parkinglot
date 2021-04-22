@@ -1,5 +1,7 @@
 package com.terence.parking;
 
+import com.terence.parking.repository.ParkingLotRepository;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,7 +17,12 @@ public class ParkingSpaceApplication {
     String filePath = args[0];
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 
-      reader.lines().forEach(ParkingSpaceApplication::processLine);
+      String firstLine = reader.readLine();
+      String[] firstLineArray = firstLine.split(" ");
+      ParkingLotRepository.initialise(
+          Integer.parseInt(firstLineArray[0]), Integer.parseInt(firstLineArray[1]));
+
+      reader.lines().map(ParkingSpaceApplication::processLine).forEach(System.out::println);
 
     } catch (IOException e) {
       System.out.println("Something went wrong. Enter absolute path to file.");
@@ -24,6 +31,22 @@ public class ParkingSpaceApplication {
   }
 
   private static String processLine(String input) {
-    return input;
+    String[] s = input.split(" ");
+    String command = s[0];
+    String output = "";
+
+    if (command.equals("Enter")) {
+      String vehicleType = s[1];
+      String vehicleNumber = s[2];
+      String timestamp = s[3];
+
+      String lotId = ParkingLotRepository.park(vehicleType, vehicleNumber, timestamp);
+
+      output = "Accept " + lotId;
+    } else if (command.equals("Exit")) {
+
+    }
+
+    return output;
   }
 }
