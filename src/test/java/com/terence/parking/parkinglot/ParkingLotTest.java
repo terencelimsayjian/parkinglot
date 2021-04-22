@@ -1,26 +1,26 @@
-package com.terence.parking.repository;
+package com.terence.parking.parkinglot;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ParkingLotRepositoryTest {
+class ParkingLotTest {
 
   @Test
   void shouldReturnIdOfCarWhenParkedSuccessfully() throws Exception {
-    ParkingLotRepository.initialise(3, 3);
+    ParkingLot.initialise(3, 3);
 
-    String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
 
     assertEquals("CarLot1", firstParkedCarSpace);
   }
 
   @Test
   void shouldReturnIdOfSecondCarWhenParkedSuccessfully() throws Exception {
-    ParkingLotRepository.initialise(3, 3);
+    ParkingLot.initialise(3, 3);
 
-    String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
-    String secondParkedCarSpace = ParkingLotRepository.park("car", "WWW5555A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
+    String secondParkedCarSpace = ParkingLot.park("car", "WWW5555A", "1613541902");
 
     assertEquals("CarLot1", firstParkedCarSpace);
     assertEquals("CarLot2", secondParkedCarSpace);
@@ -28,22 +28,22 @@ class ParkingLotRepositoryTest {
 
   @Test
   void shouldThrowParkingLotExceptionIfCarLotsAreFull() throws Exception {
-    ParkingLotRepository.initialise(1, 1);
+    ParkingLot.initialise(1, 1);
 
-    String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
     assertThrows(
         ParkingLotException.class,
-        () -> ParkingLotRepository.park("car", "WWW5555A", "1613541902"));
+        () -> ParkingLot.park("car", "WWW5555A", "1613541902"));
 
     assertEquals("CarLot1", firstParkedCarSpace);
   }
 
   @Test
   void shouldReturnIdIdOfSecondCarWhenParkedSuccessfully() throws Exception {
-    ParkingLotRepository.initialise(3, 3);
+    ParkingLot.initialise(3, 3);
 
-    String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
-    String secondParkedCarSpace = ParkingLotRepository.park("car", "WWW5555A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
+    String secondParkedCarSpace = ParkingLot.park("car", "WWW5555A", "1613541902");
 
     assertEquals("CarLot1", firstParkedCarSpace);
     assertEquals("CarLot2", secondParkedCarSpace);
@@ -51,12 +51,12 @@ class ParkingLotRepositoryTest {
 
   @Test
   void shouldReturnTimestampWhenExitingCarpark() throws Exception {
-    ParkingLotRepository.initialise(1, 1);
+    ParkingLot.initialise(1, 1);
 
-    String firstParkedCarSpace = ParkingLotRepository.park("car", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
     assertEquals("CarLot1", firstParkedCarSpace);
 
-    ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit("SGX1234A");
+    ParkingSpotInfo parkingSpotInfo = ParkingLot.exit("SGX1234A");
     assertEquals("1613541902", parkingSpotInfo.getTimestamp());
     assertEquals("CarLot1", parkingSpotInfo.getLotId());
   }
@@ -64,19 +64,19 @@ class ParkingLotRepositoryTest {
 
   @Test
   void shouldReturnIdOfMotorcycleWhenParkedSuccessfully() throws Exception {
-    ParkingLotRepository.initialise(3, 3);
+    ParkingLot.initialise(3, 3);
 
-    String firstParkedSpace = ParkingLotRepository.park("motorcycle", "SGX1234A", "1613541902");
+    String firstParkedSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
   }
 
   @Test
   void shouldReturnIdOfSecondMotorcycleWhenParkedSuccessfully() throws Exception {
-    ParkingLotRepository.initialise(3, 3);
+    ParkingLot.initialise(3, 3);
 
-    String firstParkedSpace = ParkingLotRepository.park("motorcycle", "SGX1234A", "1613541902");
-    String secondParkedSpace = ParkingLotRepository.park("motorcycle", "WWW5555A", "1613541902");
+    String firstParkedSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
+    String secondParkedSpace = ParkingLot.park("motorcycle", "WWW5555A", "1613541902");
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
     assertEquals("MotorcycleLot2", secondParkedSpace);
@@ -84,24 +84,24 @@ class ParkingLotRepositoryTest {
 
   @Test
   void shouldThrowParkingLotExceptionIfMotorcycleLotsAreFull() throws Exception {
-    ParkingLotRepository.initialise(1, 1);
+    ParkingLot.initialise(1, 1);
 
-    String firstParkedSpace = ParkingLotRepository.park("motorcycle", "SGX1234A", "1613541902");
+    String firstParkedSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
     assertThrows(
         ParkingLotException.class,
-        () -> ParkingLotRepository.park("motorcycle", "WWW5555A", "1613541902"));
+        () -> ParkingLot.park("motorcycle", "WWW5555A", "1613541902"));
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
   }
 
   @Test
   void shouldReturnTimestampWhenMotorcycleExitsCarpark() throws Exception {
-    ParkingLotRepository.initialise(1, 1);
+    ParkingLot.initialise(1, 1);
 
-    String firstParkedCarSpace = ParkingLotRepository.park("motorcycle", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
     assertEquals("MotorcycleLot1", firstParkedCarSpace);
 
-    ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit("SGX1234A");
+    ParkingSpotInfo parkingSpotInfo = ParkingLot.exit("SGX1234A");
     assertEquals("1613541902", parkingSpotInfo.getTimestamp());
     assertEquals("MotorcycleLot1", parkingSpotInfo.getLotId());
     assertEquals("motorcycle", parkingSpotInfo.getVehicleType());

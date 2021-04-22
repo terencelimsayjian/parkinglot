@@ -1,4 +1,4 @@
-package com.terence.parking.repository;
+package com.terence.parking.parkinglot;
 
 class ParkingSpot {
 

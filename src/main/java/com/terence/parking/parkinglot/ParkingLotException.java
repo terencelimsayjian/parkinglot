@@ -1,3 +1,3 @@
-package com.terence.parking.repository;
+package com.terence.parking.parkinglot;
 
 public class ParkingLotException extends Exception {}

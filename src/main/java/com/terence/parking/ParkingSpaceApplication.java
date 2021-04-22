@@ -1,8 +1,8 @@
 package com.terence.parking;
 
-import com.terence.parking.repository.ParkingLotException;
-import com.terence.parking.repository.ParkingLotRepository;
-import com.terence.parking.repository.ParkingSpotInfo;
+import com.terence.parking.parkinglot.ParkingLotException;
+import com.terence.parking.parkinglot.ParkingLot;
+import com.terence.parking.parkinglot.ParkingSpotInfo;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,7 +21,7 @@ public class ParkingSpaceApplication {
 
       String firstLine = reader.readLine();
       String[] firstLineArray = firstLine.split(" ");
-      ParkingLotRepository.initialise(
+      ParkingLot.initialise(
           Integer.parseInt(firstLineArray[0]), Integer.parseInt(firstLineArray[1]));
 
       reader.lines().map(ParkingSpaceApplication::processLine).forEach(System.out::println);
@@ -44,7 +44,7 @@ public class ParkingSpaceApplication {
 
       String lotId = null;
       try {
-        lotId = ParkingLotRepository.park(vehicleType, vehicleNumber, timestamp);
+        lotId = ParkingLot.park(vehicleType, vehicleNumber, timestamp);
         output = "Accept " + lotId;
       } catch (ParkingLotException e) {
         output = "Reject";
@@ -54,7 +54,7 @@ public class ParkingSpaceApplication {
       String vehicleNumber = s[1];
       String timestamp = s[2];
 
-      ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit(vehicleNumber);
+      ParkingSpotInfo parkingSpotInfo = ParkingLot.exit(vehicleNumber);
       String startinTimestamp = parkingSpotInfo.getTimestamp();
       String lotId = parkingSpotInfo.getLotId();
       String vehicleType = parkingSpotInfo.getVehicleType();

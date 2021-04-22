@@ -1,4 +1,4 @@
-package com.terence.parking.repository;
+package com.terence.parking.parkinglot;
 
 public class ParkingSpotInfo {
   private final String lotId;

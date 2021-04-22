@@ -1,14 +1,14 @@
-package com.terence.parking.repository;
+package com.terence.parking.parkinglot;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ParkingLotRepository {
+public class ParkingLot {
   private static List<ParkingSpot> carLots;
   private static List<ParkingSpot> motorcycleLots;
 
-  private ParkingLotRepository() {}
+  private ParkingLot() {}
 
   public static void initialise(int carCapacity, int motorcycleCapacity) {
 
