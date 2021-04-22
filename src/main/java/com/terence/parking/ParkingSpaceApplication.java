@@ -1,6 +1,6 @@
 package com.terence.parking;
 
-import com.terence.parking.parkinglot.ParkingLotException;
+import com.terence.parking.parkinglot.CarParkFullException;
 import com.terence.parking.parkinglot.ParkingLot;
 import com.terence.parking.parkinglot.ParkingSpotInfo;
 import com.terence.parking.parkinglot.VehicleType;
@@ -49,7 +49,7 @@ public class ParkingSpaceApplication {
       try {
         lotId = ParkingLot.park(vehicleNumber, timestamp, vehicle);
         output = "Accept " + lotId;
-      } catch (ParkingLotException e) {
+      } catch (CarParkFullException e) {
         output = "Reject";
       }
 

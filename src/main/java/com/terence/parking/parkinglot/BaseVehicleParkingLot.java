@@ -19,21 +19,17 @@ public class BaseVehicleParkingLot implements VehicleParkingLot {
 
   @Override
   public String park(String vehicleNumber, String timestamp) throws CarParkFullException {
-    try {
       return getNextAvailableLot().park(vehicleNumber, timestamp);
-    } catch (ParkingLotException e) {
-      throw new CarParkFullException();
-    }
   }
 
-  private ParkingSpot getNextAvailableLot() throws ParkingLotException {
+  private ParkingSpot getNextAvailableLot() throws CarParkFullException {
     for (int i = 0; i < parkingSpots.size(); i++) {
       if (parkingSpots.get(i).isVacant()) {
         return parkingSpots.get(i);
       }
     }
 
-    throw new ParkingLotException();
+    throw new CarParkFullException();
   }
 
   @Override

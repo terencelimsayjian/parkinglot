@@ -27,12 +27,12 @@ class ParkingLotTest {
   }
 
   @Test
-  void shouldThrowParkingLotExceptionIfCarLotsAreFull() throws Exception {
+  void shouldThrowCarParkFullExceptionIfCarLotsAreFull() throws Exception {
     ParkingLot.initialise(1, 1);
 
     String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.CAR);
     assertThrows(
-        ParkingLotException.class,
+        CarParkFullException.class,
         () -> ParkingLot.park("WWW5555A", "1613541902", VehicleType.CAR));
 
     assertEquals("CarLot1", firstParkedCarSpace);
@@ -82,12 +82,12 @@ class ParkingLotTest {
   }
 
   @Test
-  void shouldThrowParkingLotExceptionIfMotorcycleLotsAreFull() throws Exception {
+  void shouldThrowCarParkFullExceptionIfMotorcycleLotsAreFull() throws Exception {
     ParkingLot.initialise(1, 1);
 
     String firstParkedSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.MOTORCYCLE);
     assertThrows(
-        ParkingLotException.class,
+        CarParkFullException.class,
         () -> ParkingLot.park("WWW5555A", "1613541902", VehicleType.MOTORCYCLE));
 
     assertEquals("MotorcycleLot1", firstParkedSpace);

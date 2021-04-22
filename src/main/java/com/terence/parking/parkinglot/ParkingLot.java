@@ -20,23 +20,15 @@ public class ParkingLot {
   }
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
-      throws ParkingLotException {
+      throws CarParkFullException {
     if (vehicleTypeEnum == VehicleType.CAR) {
-      try {
         String park = carParkingLot.park(vehicleNumber, timestamp);
         vehicleLookup.put(vehicleNumber, VehicleType.CAR);
         return park;
-      } catch (CarParkFullException e) {
-        throw new ParkingLotException();
-      }
     } else {
-      try {
         String park = motorCycleParkingLot.park(vehicleNumber, timestamp);
         vehicleLookup.put(vehicleNumber, VehicleType.MOTORCYCLE);
         return park;
-      } catch (CarParkFullException e) {
-        throw new ParkingLotException();
-      }
     }
   }
 
