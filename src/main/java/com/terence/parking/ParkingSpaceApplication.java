@@ -55,6 +55,8 @@ public class ParkingSpaceApplication {
       String timestamp = s[2];
 
       ParkingSpotInfo parkingSpotInfo = ParkingLotRepository.exit(vehicleNumber);
+      String timestamp1 = parkingSpotInfo.getTimestamp();
+      String lotId = parkingSpotInfo.getLotId();
     }
 
     return output;

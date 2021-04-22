@@ -24,9 +24,11 @@ class ParkingSpot {
     return id;
   }
 
-  void park(String vehicleNumber, String timestamp) {
+  String park(String vehicleNumber, String timestamp) {
     this.vehicleNumber = vehicleNumber;
     this.timestamp = timestamp;
+
+    return this.id;
   }
 
   boolean isVacant() {

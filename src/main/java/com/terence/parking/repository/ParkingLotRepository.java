@@ -16,35 +16,32 @@ public class ParkingLotRepository {
     motorcycleLots = new ArrayList<>(motorcycleCapacity);
 
     for (int i = 0; i < carCapacity; i++) {
-      carLots.add(new ParkingSpot(Integer.toString(i + 1)));
+      carLots.add(new ParkingSpot("CarLot" + Integer.toString(i + 1)));
     }
 
     for (int i = 0; i < motorcycleCapacity; i++) {
-      motorcycleLots.add(new ParkingSpot(Integer.toString(i + 1)));
+      motorcycleLots.add(new ParkingSpot("MotorcycleLot" + Integer.toString(i + 1)));
     }
   }
 
   public static String park(String vehicleType, String vehicleNumber, String timestamp)
       throws ParkingLotException {
 
-    String prefix = "";
     int nextAvailableLot = 0;
     if (vehicleType.equals("car")) {
       nextAvailableLot = getNextAvailableLot("car");
 
       ParkingSpot availableParkingSpot = carLots.get(nextAvailableLot);
-      availableParkingSpot.park(vehicleNumber, timestamp);
-      prefix = "CarLot";
+      return availableParkingSpot.park(vehicleNumber, timestamp);
     } else if (vehicleType.equals("motorcycle")) {
       nextAvailableLot = getNextAvailableLot("motorcycle");
 
       ParkingSpot availableParkingSpot = motorcycleLots.get(nextAvailableLot);
-      availableParkingSpot.park(vehicleNumber, timestamp);
-      prefix = "MotorcycleLot";
+      return availableParkingSpot.park(vehicleNumber, timestamp);
+    } else {
+      return "";
     }
 
-    int lotId = nextAvailableLot + 1;
-    return prefix + lotId;
   }
 
   private static int getNextAvailableLot(String vehicleType) throws ParkingLotException {
