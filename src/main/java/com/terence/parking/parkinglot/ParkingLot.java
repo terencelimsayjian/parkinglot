@@ -1,12 +1,15 @@
 package com.terence.parking.parkinglot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ParkingLot {
   private static List<ParkingSpot> carLots;
   private static List<ParkingSpot> motorcycleLots;
+  private static Map<String, VehicleType> vehicleLookup;
 
   private ParkingLot() {}
 
@@ -14,6 +17,8 @@ public class ParkingLot {
 
     carLots = new ArrayList<>(carCapacity);
     motorcycleLots = new ArrayList<>(motorcycleCapacity);
+
+    vehicleLookup = new HashMap<>();
 
     for (int i = 0; i < carCapacity; i++) {
       carLots.add(new ParkingSpot("CarLot" + Integer.toString(i + 1)));
@@ -27,27 +32,31 @@ public class ParkingLot {
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
       throws ParkingLotException {
 
-    return getNextAvailableLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
+    String carparkId = getNextAvailableLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
+
+    vehicleLookup.put(vehicleNumber, vehicleTypeEnum);
+
+    return carparkId;
   }
 
   private static ParkingSpot getNextAvailableLot(VehicleType vehicleTypeEnum)
       throws ParkingLotException {
-    List<ParkingSpot> carparkLots = carLots;
+    List<ParkingSpot> parkingSpots = carLots;
     switch (vehicleTypeEnum) {
       case CAR:
-        carparkLots = carLots;
+        parkingSpots = carLots;
         break;
       case MOTORCYCLE:
-        carparkLots = motorcycleLots;
+        parkingSpots = motorcycleLots;
         break;
       default:
         // Throw Unsupported vehicle exception
     }
 
-    for (int i = 0; i < carparkLots.size(); i++) {
+    for (int i = 0; i < parkingSpots.size(); i++) {
 
-      if (carparkLots.get(i).isVacant()) {
-        return carparkLots.get(i);
+      if (parkingSpots.get(i).isVacant()) {
+        return parkingSpots.get(i);
       }
     }
 
@@ -55,8 +64,23 @@ public class ParkingLot {
   }
 
   public static ParkingSpotInfo exit(String vehicleNumber) {
+    VehicleType vehicleType = vehicleLookup.get(vehicleNumber);
+
+    List<ParkingSpot> parkingSpots = carLots;
+
+    switch (vehicleType) {
+      case CAR:
+        parkingSpots = carLots;
+        break;
+      case MOTORCYCLE:
+        parkingSpots = motorcycleLots;
+        break;
+      default:
+        // throw Exception
+    }
+
     Optional<ParkingSpot> optionalCarParkingSpot =
-        carLots.stream()
+        parkingSpots.stream()
             .filter(ps -> !ps.isVacant())
             .filter(s -> s.getVehicleNumber().equals(vehicleNumber))
             .findFirst();
@@ -64,23 +88,10 @@ public class ParkingLot {
     if (optionalCarParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalCarParkingSpot.get();
       ParkingSpotInfo parkingSpotInfo =
-          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), VehicleType.CAR);
+          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), vehicleType);
       parkingSpot.leave();
-      return parkingSpotInfo;
-    }
 
-    Optional<ParkingSpot> optionalMotorcycleParkingSpot =
-        motorcycleLots.stream()
-            .filter(ps -> !ps.isVacant())
-            .filter(s -> s.getVehicleNumber().equals(vehicleNumber))
-            .findFirst();
-
-    if (optionalMotorcycleParkingSpot.isPresent()) {
-      ParkingSpot parkingSpot = optionalMotorcycleParkingSpot.get();
-      ParkingSpotInfo parkingSpotInfo =
-          new ParkingSpotInfo(
-              parkingSpot.getId(), parkingSpot.getTimestamp(), VehicleType.MOTORCYCLE);
-      parkingSpot.leave();
+      vehicleLookup.remove(vehicleNumber);
       return parkingSpotInfo;
     }
 
