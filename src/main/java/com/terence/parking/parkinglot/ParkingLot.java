@@ -24,31 +24,39 @@ public class ParkingLot {
     }
   }
 
-  public static String park(String vehicleType, String vehicleNumber, String timestamp)
+  public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
       throws ParkingLotException {
 
     int nextAvailableLot = 0;
-    if (vehicleType.equals("car")) {
-      nextAvailableLot = getNextAvailableLot("car");
 
-      ParkingSpot availableParkingSpot = carLots.get(nextAvailableLot);
-      return availableParkingSpot.park(vehicleNumber, timestamp);
-    } else if (vehicleType.equals("motorcycle")) {
-      nextAvailableLot = getNextAvailableLot("motorcycle");
+    switch (vehicleTypeEnum) {
+      case CAR:
+        nextAvailableLot = getNextAvailableLot(vehicleTypeEnum);
 
-      ParkingSpot availableParkingSpot = motorcycleLots.get(nextAvailableLot);
-      return availableParkingSpot.park(vehicleNumber, timestamp);
-    } else {
-      return "";
+        ParkingSpot availableCarParkingSpot = carLots.get(nextAvailableLot);
+        return availableCarParkingSpot.park(vehicleNumber, timestamp);
+      case MOTORCYCLE:
+        nextAvailableLot = getNextAvailableLot(vehicleTypeEnum);
+
+        ParkingSpot availableMotorcycleParkingSpot = motorcycleLots.get(nextAvailableLot);
+        return availableMotorcycleParkingSpot.park(vehicleNumber, timestamp);
+      default:
+        return "";
+        // Throw Unsupported vehicle exception
     }
   }
 
-  private static int getNextAvailableLot(String vehicleType) throws ParkingLotException {
+  private static int getNextAvailableLot(VehicleType vehicleTypeEnum) throws ParkingLotException {
     List<ParkingSpot> carparkLots = carLots;
-    if (vehicleType.equals("car")) {
-      carparkLots = carLots;
-    } else if (vehicleType.equals("motorcycle")) {
-      carparkLots = motorcycleLots;
+    switch (vehicleTypeEnum) {
+      case CAR:
+        carparkLots = carLots;
+        break;
+      case MOTORCYCLE:
+        carparkLots = motorcycleLots;
+        break;
+      default:
+        // Throw Unsupported vehicle exception
     }
 
     for (int i = 0; i < carparkLots.size(); i++) {
@@ -71,7 +79,7 @@ public class ParkingLot {
     if (optionalCarParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalCarParkingSpot.get();
       ParkingSpotInfo parkingSpotInfo =
-          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), "car");
+          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), VehicleType.CAR);
       parkingSpot.leave();
       return parkingSpotInfo;
     }
@@ -85,7 +93,8 @@ public class ParkingLot {
     if (optionalMotorcycleParkingSpot.isPresent()) {
       ParkingSpot parkingSpot = optionalMotorcycleParkingSpot.get();
       ParkingSpotInfo parkingSpotInfo =
-          new ParkingSpotInfo(parkingSpot.getId(), parkingSpot.getTimestamp(), "motorcycle");
+          new ParkingSpotInfo(
+              parkingSpot.getId(), parkingSpot.getTimestamp(), VehicleType.MOTORCYCLE);
       parkingSpot.leave();
       return parkingSpotInfo;
     }

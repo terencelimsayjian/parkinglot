@@ -10,7 +10,7 @@ class ParkingLotTest {
   void shouldReturnIdOfCarWhenParkedSuccessfully() throws Exception {
     ParkingLot.initialise(3, 3);
 
-    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.CAR);
 
     assertEquals("CarLot1", firstParkedCarSpace);
   }
@@ -19,8 +19,8 @@ class ParkingLotTest {
   void shouldReturnIdOfSecondCarWhenParkedSuccessfully() throws Exception {
     ParkingLot.initialise(3, 3);
 
-    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
-    String secondParkedCarSpace = ParkingLot.park("car", "WWW5555A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.CAR);
+    String secondParkedCarSpace = ParkingLot.park("WWW5555A", "1613541902", VehicleType.CAR);
 
     assertEquals("CarLot1", firstParkedCarSpace);
     assertEquals("CarLot2", secondParkedCarSpace);
@@ -30,10 +30,10 @@ class ParkingLotTest {
   void shouldThrowParkingLotExceptionIfCarLotsAreFull() throws Exception {
     ParkingLot.initialise(1, 1);
 
-    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.CAR);
     assertThrows(
         ParkingLotException.class,
-        () -> ParkingLot.park("car", "WWW5555A", "1613541902"));
+        () -> ParkingLot.park("WWW5555A", "1613541902", VehicleType.CAR));
 
     assertEquals("CarLot1", firstParkedCarSpace);
   }
@@ -42,8 +42,8 @@ class ParkingLotTest {
   void shouldReturnIdIdOfSecondCarWhenParkedSuccessfully() throws Exception {
     ParkingLot.initialise(3, 3);
 
-    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
-    String secondParkedCarSpace = ParkingLot.park("car", "WWW5555A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.CAR);
+    String secondParkedCarSpace = ParkingLot.park("WWW5555A", "1613541902", VehicleType.CAR);
 
     assertEquals("CarLot1", firstParkedCarSpace);
     assertEquals("CarLot2", secondParkedCarSpace);
@@ -53,7 +53,7 @@ class ParkingLotTest {
   void shouldReturnTimestampWhenExitingCarpark() throws Exception {
     ParkingLot.initialise(1, 1);
 
-    String firstParkedCarSpace = ParkingLot.park("car", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.CAR);
     assertEquals("CarLot1", firstParkedCarSpace);
 
     ParkingSpotInfo parkingSpotInfo = ParkingLot.exit("SGX1234A");
@@ -66,7 +66,7 @@ class ParkingLotTest {
   void shouldReturnIdOfMotorcycleWhenParkedSuccessfully() throws Exception {
     ParkingLot.initialise(3, 3);
 
-    String firstParkedSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
+    String firstParkedSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.MOTORCYCLE);
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
   }
@@ -75,8 +75,8 @@ class ParkingLotTest {
   void shouldReturnIdOfSecondMotorcycleWhenParkedSuccessfully() throws Exception {
     ParkingLot.initialise(3, 3);
 
-    String firstParkedSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
-    String secondParkedSpace = ParkingLot.park("motorcycle", "WWW5555A", "1613541902");
+    String firstParkedSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.MOTORCYCLE);
+    String secondParkedSpace = ParkingLot.park("WWW5555A", "1613541902", VehicleType.MOTORCYCLE);
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
     assertEquals("MotorcycleLot2", secondParkedSpace);
@@ -86,10 +86,10 @@ class ParkingLotTest {
   void shouldThrowParkingLotExceptionIfMotorcycleLotsAreFull() throws Exception {
     ParkingLot.initialise(1, 1);
 
-    String firstParkedSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
+    String firstParkedSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.MOTORCYCLE);
     assertThrows(
         ParkingLotException.class,
-        () -> ParkingLot.park("motorcycle", "WWW5555A", "1613541902"));
+        () -> ParkingLot.park("WWW5555A", "1613541902", VehicleType.MOTORCYCLE));
 
     assertEquals("MotorcycleLot1", firstParkedSpace);
   }
@@ -98,12 +98,12 @@ class ParkingLotTest {
   void shouldReturnTimestampWhenMotorcycleExitsCarpark() throws Exception {
     ParkingLot.initialise(1, 1);
 
-    String firstParkedCarSpace = ParkingLot.park("motorcycle", "SGX1234A", "1613541902");
+    String firstParkedCarSpace = ParkingLot.park("SGX1234A", "1613541902", VehicleType.MOTORCYCLE);
     assertEquals("MotorcycleLot1", firstParkedCarSpace);
 
     ParkingSpotInfo parkingSpotInfo = ParkingLot.exit("SGX1234A");
     assertEquals("1613541902", parkingSpotInfo.getTimestamp());
     assertEquals("MotorcycleLot1", parkingSpotInfo.getLotId());
-    assertEquals("motorcycle", parkingSpotInfo.getVehicleType());
+    assertEquals(VehicleType.MOTORCYCLE, parkingSpotInfo.getVehicleTypeEnum());
   }
 }

@@ -3,12 +3,12 @@ package com.terence.parking.parkinglot;
 public class ParkingSpotInfo {
   private final String lotId;
   private final String timestamp;
-  private final String vehicleType;
+  private final VehicleType vehicleTypeEnum;
 
-  public ParkingSpotInfo(String lotId, String timestamp, String vehicleType) {
+  public ParkingSpotInfo(String lotId, String timestamp, VehicleType vehicleTypeEnum) {
     this.lotId = lotId;
     this.timestamp = timestamp;
-    this.vehicleType = vehicleType;
+    this.vehicleTypeEnum = vehicleTypeEnum;
   }
 
   public String getLotId() {
@@ -19,7 +19,7 @@ public class ParkingSpotInfo {
     return timestamp;
   }
 
-  public String getVehicleType() {
-    return vehicleType;
+  public VehicleType getVehicleTypeEnum() {
+    return vehicleTypeEnum;
   }
 }

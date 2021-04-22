@@ -3,6 +3,7 @@ package com.terence.parking;
 import com.terence.parking.parkinglot.ParkingLotException;
 import com.terence.parking.parkinglot.ParkingLot;
 import com.terence.parking.parkinglot.ParkingSpotInfo;
+import com.terence.parking.parkinglot.VehicleType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -42,9 +43,11 @@ public class ParkingSpaceApplication {
       String vehicleNumber = s[2];
       String timestamp = s[3];
 
+      VehicleType vehicle = VehicleType.valueOf(vehicleType.toUpperCase());
+
       String lotId = null;
       try {
-        lotId = ParkingLot.park(vehicleType, vehicleNumber, timestamp);
+        lotId = ParkingLot.park(vehicleNumber, timestamp, vehicle);
         output = "Accept " + lotId;
       } catch (ParkingLotException e) {
         output = "Reject";
@@ -57,17 +60,22 @@ public class ParkingSpaceApplication {
       ParkingSpotInfo parkingSpotInfo = ParkingLot.exit(vehicleNumber);
       String startinTimestamp = parkingSpotInfo.getTimestamp();
       String lotId = parkingSpotInfo.getLotId();
-      String vehicleType = parkingSpotInfo.getVehicleType();
+      VehicleType vehicleTypeEnum = parkingSpotInfo.getVehicleTypeEnum();
 
       long startingTimestamp = Long.parseLong(startinTimestamp);
       long endingTimestamp = Long.parseLong(timestamp);
       long numberOfHours = ((endingTimestamp - startingTimestamp) / 60) / 60 + 1;
       long charge = 0;
 
-      if (vehicleType.equals("car")) {
-        charge = numberOfHours * 2;
-      } else if (vehicleType.equals("motorcycle")) {
-        charge = numberOfHours * 1;
+      switch (vehicleTypeEnum) {
+        case CAR:
+          charge = numberOfHours * 2;
+          break;
+        case MOTORCYCLE:
+          charge = numberOfHours * 1;
+          break;
+        default:
+          // Throw Unsupported vehicle exception
       }
 
       output = lotId + " " + charge;
