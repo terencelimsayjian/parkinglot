@@ -21,24 +21,25 @@ public class ParkingLot {
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
       throws CarParkFullException {
-    if (vehicleTypeEnum == VehicleType.CAR) {
-        String park = carParkingLot.park(vehicleNumber, timestamp);
-        vehicleLookup.put(vehicleNumber, VehicleType.CAR);
-        return park;
-    } else {
-        String park = motorCycleParkingLot.park(vehicleNumber, timestamp);
-        vehicleLookup.put(vehicleNumber, VehicleType.MOTORCYCLE);
-        return park;
-    }
+    String park = getVehicleParkingLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
+    vehicleLookup.put(vehicleNumber, vehicleTypeEnum);
+    return park;
   }
 
   public static ParkingSpotInfo exit(String vehicleNumber) {
     VehicleType vehicleType = vehicleLookup.get(vehicleNumber);
+    return getVehicleParkingLot(vehicleType).exit(vehicleNumber);
+  }
 
-    if (vehicleType == VehicleType.CAR) {
-      return carParkingLot.exit(vehicleNumber);
-    } else {
-      return motorCycleParkingLot.exit(vehicleNumber);
+  private static VehicleParkingLot getVehicleParkingLot(VehicleType vehicleTypeEnum) {
+    switch (vehicleTypeEnum) {
+      case CAR:
+        return carParkingLot;
+      case MOTORCYCLE:
+        return motorCycleParkingLot;
+      default:
+        return carParkingLot;
+      // TODO: Throw new exception
     }
   }
 }
