@@ -1,5 +1,6 @@
 package com.terence.parking;
 
+import com.terence.parking.feecalculation.HourlyFeeCalculator;
 import com.terence.parking.parkinglot.BaseVehicleParkingLot;
 import com.terence.parking.parkinglot.ParkingLotFullException;
 import com.terence.parking.parkinglot.ParkingLot;
@@ -9,6 +10,7 @@ import com.terence.parking.parkinglot.VehicleType;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class ParkingSpaceApplication {
 
@@ -66,21 +68,22 @@ public class ParkingSpaceApplication {
 
       long startingTimestamp = Long.parseLong(startinTimestamp);
       long endingTimestamp = Long.parseLong(timestamp);
-      long numberOfHours = ((endingTimestamp - startingTimestamp) / 60) / 60 + 1;
-      long charge = 0;
+      BigDecimal charge = BigDecimal.ONE;
 
       switch (vehicleTypeEnum) {
         case CAR:
-          charge = numberOfHours * 2;
+          HourlyFeeCalculator carFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(2));
+          charge = carFeeCalculator.calculate(startingTimestamp, endingTimestamp);
           break;
         case MOTORCYCLE:
-          charge = numberOfHours * 1;
+          HourlyFeeCalculator motorcycleFeeCalculator = new HourlyFeeCalculator(BigDecimal.valueOf(1));
+          charge = motorcycleFeeCalculator.calculate(startingTimestamp, endingTimestamp);
           break;
         default:
           // Throw Unsupported vehicle exception
       }
 
-      output = lotId + " " + charge;
+      output = lotId + " " + charge.setScale(0);
     }
 
     return output;
