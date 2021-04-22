@@ -1,33 +1,33 @@
 package com.terence.parking.repository;
 
-public class ParkingSpot {
+class ParkingSpot {
 
   private String vehicleNumber;
   private String timestamp;
 
-  public ParkingSpot() {
+  ParkingSpot() {
     vehicleNumber = null;
     timestamp = null;
   }
 
-  public String getVehicleNumber() {
+  String getVehicleNumber() {
     return vehicleNumber;
   }
 
-  public String getTimestamp() {
+  String getTimestamp() {
     return timestamp;
   }
 
-  public void park(String vehicleNumber, String timestamp) {
+  void park(String vehicleNumber, String timestamp) {
     this.vehicleNumber = vehicleNumber;
     this.timestamp = timestamp;
   }
 
-  public boolean isVacant() {
+  boolean isVacant() {
     return vehicleNumber == null;
   }
 
-  public void leave() {
+  void leave() {
     vehicleNumber = null;
     timestamp = null;
   }
