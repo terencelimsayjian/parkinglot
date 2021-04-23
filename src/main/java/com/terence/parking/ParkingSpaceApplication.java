@@ -59,8 +59,8 @@ public class ParkingSpaceApplication {
   }
 
   private static String processLine(String input) {
-    String[] s = input.split(" ");
-    String userInstruction = s[0];
+    String[] split = input.split(" ");
+    String userInstruction = split[0];
 
     Command command = null;
     if (userInstruction.equalsIgnoreCase(ENTER)) {
@@ -70,8 +70,8 @@ public class ParkingSpaceApplication {
     }
 
     try {
-      command.validate(s);
-      return command.execute(s);
+      command.validate(split);
+      return command.execute(split);
     } catch (CommandValidationException e) {
       return e.getMessage();
     }
