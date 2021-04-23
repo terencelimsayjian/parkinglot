@@ -3,20 +3,18 @@ package com.terence.parking.command;
 import com.terence.parking.parkinglot.ParkingLot;
 import com.terence.parking.parkinglot.ParkingLotFullException;
 import com.terence.parking.parkinglot.VehicleType;
+import com.terence.parking.validator.Validator;
+import com.terence.parking.validator.ValidationException;
 
 public class EnterCommand implements Command {
 
   @Override
   public void validate(String[] args) throws CommandValidationException {
-    if (args.length != 4) {
-      throw new CommandValidationException("Invalid number of arguments. Expected 4 but got " + (args.length) + ".");
-    }
-
     try {
-      String timestamp = args[3];
-      Long.valueOf(timestamp);
-    } catch (NumberFormatException e) {
-      throw new CommandValidationException("Invalid timestamp format.");
+      Validator.validateArgsLength(args, 4);
+      Validator.validateTimestamp(args[3]);
+    } catch (ValidationException e) {
+      throw new CommandValidationException(e.getMessage());
     }
   }
 
