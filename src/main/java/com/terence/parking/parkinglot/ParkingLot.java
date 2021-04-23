@@ -8,6 +8,7 @@ public class ParkingLot {
 
   private static VehicleParkingLot carParkingLot;
   private static VehicleParkingLot motorCycleParkingLot;
+  private static boolean isInitialised = false;
 
   private ParkingLot() {}
 
@@ -15,10 +16,12 @@ public class ParkingLot {
     vehicleLookup = new HashMap<>();
     carParkingLot = carLot;
     motorCycleParkingLot = motorCycleLot;
+    isInitialised = true;
   }
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
       throws ParkingLotFullException {
+
     String park = getVehicleParkingLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
     vehicleLookup.put(vehicleNumber, vehicleTypeEnum);
     return park;
@@ -27,6 +30,13 @@ public class ParkingLot {
   public static ParkingSummary exit(String vehicleNumber, long endTimeEpochSeconds) {
     VehicleType vehicleType = vehicleLookup.get(vehicleNumber);
     return getVehicleParkingLot(vehicleType).exit(vehicleNumber, endTimeEpochSeconds);
+  }
+
+  public static void resetInstance() {
+    vehicleLookup = new HashMap<>();
+    carParkingLot = null;
+    motorCycleParkingLot = null;
+    isInitialised = false;
   }
 
   private static VehicleParkingLot getVehicleParkingLot(VehicleType vehicleTypeEnum) {

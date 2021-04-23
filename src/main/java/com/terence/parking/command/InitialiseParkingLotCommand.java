@@ -12,7 +12,26 @@ public class InitialiseParkingLotCommand implements Command {
   public static final String MOTORCYCLE_LOT_ID_PREFIX = "MotorcycleLot";
 
   @Override
-  public void validate(String[] args) throws CommandValidationException {}
+  public void validate(String[] args) throws CommandValidationException {
+    if (args.length != 2) {
+      throw new CommandValidationException(
+          "Invalid number of arguments. Expected 2 but got " + (args.length) + ".");
+    }
+
+    try {
+      String firstInt = args[0];
+      Integer.valueOf(firstInt);
+    } catch (NumberFormatException e) {
+      throw new CommandValidationException("Invalid integer.");
+    }
+
+    try {
+      String firstInt = args[1];
+      Integer.valueOf(firstInt);
+    } catch (NumberFormatException e) {
+      throw new CommandValidationException("Invalid integer.");
+    }
+  }
 
   @Override
   public String execute(String[] args) {

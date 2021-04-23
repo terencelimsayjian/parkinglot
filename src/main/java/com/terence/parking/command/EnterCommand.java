@@ -9,7 +9,7 @@ public class EnterCommand implements Command {
   @Override
   public void validate(String[] args) throws CommandValidationException {
     if (args.length != 4) {
-      throw new CommandValidationException("Invalid number of arguments. Expected 3 but got " + (args.length - 1) + ".");
+      throw new CommandValidationException("Invalid number of arguments. Expected 4 but got " + (args.length) + ".");
     }
 
     try {

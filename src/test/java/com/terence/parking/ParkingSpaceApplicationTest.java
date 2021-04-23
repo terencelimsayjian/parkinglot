@@ -1,12 +1,12 @@
 package com.terence.parking;
 
+import com.terence.parking.parkinglot.ParkingLot;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -27,6 +27,7 @@ class ParkingSpaceApplicationTest {
   @AfterEach
   void tearDown() {
     System.setOut(originalOut);
+    ParkingLot.resetInstance();
   }
 
   @Test
@@ -65,13 +66,24 @@ class ParkingSpaceApplicationTest {
     assertEquals(expected, outContent.toString());
   }
 
+//  @Test
+//  void shouldThrowErrorIfParkingLotIsNotInitialisedFirst() throws Exception {
+//    String testPath = getAbsolutePathToResource("invalid_test_input_1.txt");
+//
+//    ParkingSpaceApplication.main(new String[] {testPath});
+//
+//    String expected = "Line 1: Parking Lot is not initialised. Please initialise Parking Lot first.\n";
+//
+//    assertEquals(expected, outContent.toString());
+//  }
+
   @Test
   void shouldStopProcessingAndThrowValidationError() throws Exception {
-    String testPath = getAbsolutePathToResource("invalid_test_input_1.txt");
+    String testPath = getAbsolutePathToResource("invalid_test_input_2.txt");
 
     ParkingSpaceApplication.main(new String[] {testPath});
 
-    String expected = "Line 2: Invalid number of arguments. Expected 3 but got 2.\n";
+    String expected = "Line 2: Invalid number of arguments. Expected 4 but got 3.\n";
 
     assertEquals(expected, outContent.toString());
   }

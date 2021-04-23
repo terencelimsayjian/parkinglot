@@ -1,6 +1,7 @@
 package com.terence.parking.parkinglot;
 
 import com.terence.parking.feecalculation.HourlyFeeCalculator;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -8,6 +9,11 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ParkingLotTest {
+
+  @AfterEach
+  void tearDown() {
+    ParkingLot.resetInstance();
+  }
 
   @Test
   void shouldHandleMultipleVehiclesParkingAndExiting() throws Exception {
