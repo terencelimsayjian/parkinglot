@@ -65,15 +65,13 @@ class ParkingSpaceApplicationTest {
     assertEquals(expected, outContent.toString());
   }
 
-
   @Test
   void shouldStopProcessingAndThrowValidationError() throws Exception {
     String testPath = getAbsolutePathToResource("invalid_test_input_1.txt");
 
     ParkingSpaceApplication.main(new String[] {testPath});
 
-    String expected =
-        "Invalid number of arguments. Expected 3 but got 2.\n";
+    String expected = "Line 2: Invalid number of arguments. Expected 3 but got 2.\n";
 
     assertEquals(expected, outContent.toString());
   }

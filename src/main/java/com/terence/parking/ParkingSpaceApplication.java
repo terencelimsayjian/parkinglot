@@ -24,23 +24,20 @@ public class ParkingSpaceApplication {
     String filePath = args[0];
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 
-      String firstLine = reader.readLine();
-      String[] split = firstLine.split(" ");
-
-      Command initialiseParkingLotCommand = new InitialiseParkingLotCommand();
-      try {
-        initialiseParkingLotCommand.validate(split);
-        initialiseParkingLotCommand.execute(split);
-      } catch (CommandValidationException e) {
-        e.printStackTrace();
-      }
-
       String line;
+      int lineNumber = 1;
       while ((line = reader.readLine()) != null) {
+
         try {
-          System.out.println(processLine(line));
+          String output = processLine(line);
+
+          if (!output.isBlank()) {
+            System.out.println(output);
+          }
+
+          lineNumber++;
         } catch (CommandValidationException e) {
-          System.out.println(e.getMessage());
+          System.out.println("Line " + lineNumber + ": " + e.getMessage());
           break;
         }
       }
@@ -55,7 +52,9 @@ public class ParkingSpaceApplication {
     String userInstruction = split[0];
 
     Command command = null;
-    if (userInstruction.equalsIgnoreCase(ENTER)) {
+    if (isInt(userInstruction)) {
+      command = new InitialiseParkingLotCommand();
+    } else if (userInstruction.equalsIgnoreCase(ENTER)) {
       command = new EnterCommand();
     } else if (userInstruction.equalsIgnoreCase(EXIT)) {
       command = new ExitCommand();
@@ -63,5 +62,14 @@ public class ParkingSpaceApplication {
 
     command.validate(split);
     return command.execute(split);
+  }
+
+  private static boolean isInt(String input) {
+    try {
+      Integer.parseInt(input);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
   }
 }
