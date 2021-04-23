@@ -21,10 +21,8 @@ public class ExitCommand implements Command {
     String vehicleNumber = args[1];
     String timestamp = args[2];
 
-
     long endingTimestamp = Long.parseLong(timestamp);
     ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber, endingTimestamp);
-
     return parkingSummary.getLotId() + " " + parkingSummary.getParkingFee().setScale(0);
   }
 }

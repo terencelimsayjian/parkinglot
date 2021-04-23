@@ -5,6 +5,7 @@ import com.terence.parking.command.CommandValidationException;
 import com.terence.parking.command.EnterCommand;
 import com.terence.parking.command.ExitCommand;
 import com.terence.parking.command.InitialiseParkingLotCommand;
+import com.terence.parking.parkinglot.ParkingLotNotInitialisedException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -37,7 +38,10 @@ public class ParkingSpaceApplication {
 
           lineNumber++;
         } catch (CommandValidationException e) {
-          System.out.println("Line " + lineNumber + ": " + e.getMessage());
+          System.out.println(displayLine(lineNumber) + e.getMessage());
+          break;
+        } catch (ParkingLotNotInitialisedException e) {
+          System.out.println(displayLine(lineNumber) + "Parking Lot not initialised.");
           break;
         }
       }
@@ -71,5 +75,9 @@ public class ParkingSpaceApplication {
     } catch (NumberFormatException e) {
       return false;
     }
+  }
+
+  private static String displayLine(int lineNumber) {
+    return "Line " + lineNumber + ": ";
   }
 }

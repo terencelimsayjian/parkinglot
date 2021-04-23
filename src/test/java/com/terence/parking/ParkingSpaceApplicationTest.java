@@ -72,7 +72,7 @@ class ParkingSpaceApplicationTest {
 
     ParkingSpaceApplication.main(new String[] {testPath});
 
-    String expected = "Line 1: Parking Lot Not Initialised.\n";
+    String expected = "Line 1: Parking Lot not initialised.\n";
 
     assertEquals(expected, outContent.toString());
   }
