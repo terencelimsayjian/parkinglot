@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class EnterCommandTest {
 
   @Test
-  void shouldThrowValidationExceptionIfLessThanThreeArguments() {
+  void shouldThrowValidationExceptionIfLessThanFourArguments() {
 
     Command enterCommand = new EnterCommand();
 
@@ -19,7 +19,7 @@ class EnterCommandTest {
   }
 
   @Test
-  void shouldThrowValidationExceptionIfMoreThanThreeArguments() {
+  void shouldThrowValidationExceptionIfMoreThanFourArguments() {
     Command enterCommand = new EnterCommand();
 
     String[] args = {"ENTER", "motorcycle", "SGX1234A", "1613541902", "extra argument"};
