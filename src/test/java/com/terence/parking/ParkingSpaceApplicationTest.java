@@ -66,24 +66,35 @@ class ParkingSpaceApplicationTest {
     assertEquals(expected, outContent.toString());
   }
 
-//  @Test
-//  void shouldThrowErrorIfParkingLotIsNotInitialisedFirst() throws Exception {
-//    String testPath = getAbsolutePathToResource("invalid_test_input_1.txt");
-//
-//    ParkingSpaceApplication.main(new String[] {testPath});
-//
-//    String expected = "Line 1: Parking Lot is not initialised. Please initialise Parking Lot first.\n";
-//
-//    assertEquals(expected, outContent.toString());
-//  }
+  @Test
+  void shouldThrowErrorIfParkingLotNotInitialised() throws Exception {
+    String testPath = getAbsolutePathToResource("invalid_test_input_1.txt");
+
+    ParkingSpaceApplication.main(new String[] {testPath});
+
+    String expected = "Line 1: Parking Lot Not Initialised.\n";
+
+    assertEquals(expected, outContent.toString());
+  }
 
   @Test
-  void shouldStopProcessingAndThrowValidationError() throws Exception {
+  void shouldStopProcessingAndThrowInvalidArgumentsValidationError() throws Exception {
     String testPath = getAbsolutePathToResource("invalid_test_input_2.txt");
 
     ParkingSpaceApplication.main(new String[] {testPath});
 
     String expected = "Line 2: Invalid number of arguments. Expected 4 but got 3.\n";
+
+    assertEquals(expected, outContent.toString());
+  }
+
+  @Test
+  void shouldStopProcessingAndThrowInvalidTimestampValidationError() throws Exception {
+    String testPath = getAbsolutePathToResource("invalid_test_input_3.txt");
+
+    ParkingSpaceApplication.main(new String[] {testPath});
+
+    String expected = "Accept MotorcycleLot1\n" + "Line 3: Invalid timestamp format.\n";
 
     assertEquals(expected, outContent.toString());
   }

@@ -8,7 +8,6 @@ public class ParkingLot {
 
   private static VehicleParkingLot carParkingLot;
   private static VehicleParkingLot motorCycleParkingLot;
-  private static boolean isInitialised = false;
 
   private ParkingLot() {}
 
@@ -16,7 +15,6 @@ public class ParkingLot {
     vehicleLookup = new HashMap<>();
     carParkingLot = carLot;
     motorCycleParkingLot = motorCycleLot;
-    isInitialised = true;
   }
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
@@ -36,7 +34,6 @@ public class ParkingLot {
     vehicleLookup = new HashMap<>();
     carParkingLot = null;
     motorCycleParkingLot = null;
-    isInitialised = false;
   }
 
   private static VehicleParkingLot getVehicleParkingLot(VehicleType vehicleTypeEnum) {
