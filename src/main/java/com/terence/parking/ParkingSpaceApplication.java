@@ -1,7 +1,9 @@
 package com.terence.parking;
 
+import com.terence.parking.command.Command;
 import com.terence.parking.command.CommandValidationException;
 import com.terence.parking.command.EnterCommand;
+import com.terence.parking.command.ExitCommand;
 import com.terence.parking.feecalculation.FeeCalculator;
 import com.terence.parking.feecalculation.HourlyFeeCalculator;
 import com.terence.parking.parkinglot.BaseVehicleParkingLot;
@@ -58,31 +60,20 @@ public class ParkingSpaceApplication {
 
   private static String processLine(String input) {
     String[] s = input.split(" ");
-    String command = s[0];
-    String output = "";
+    String userInstruction = s[0];
 
-    if (command.equalsIgnoreCase(ENTER)) {
-      EnterCommand enterCommand = new EnterCommand();
-
-      try {
-        enterCommand.validate(s);
-        output = enterCommand.execute(s);
-      } catch (CommandValidationException e) {
-        output = e.getMessage();
-      }
-
-    } else if (command.equalsIgnoreCase(EXIT)) {
-      String vehicleNumber = s[1];
-      String timestamp = s[2];
-
-
-      long endingTimestamp = Long.parseLong(timestamp);
-      ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber, endingTimestamp);
-
-      output = parkingSummary.getLotId() + " " + parkingSummary.getParkingFee().setScale(0);
+    Command command = null;
+    if (userInstruction.equalsIgnoreCase(ENTER)) {
+      command = new EnterCommand();
+    } else if (userInstruction.equalsIgnoreCase(EXIT)) {
+      command = new ExitCommand();
     }
 
-    return output;
+    try {
+      command.validate(s);
+      return command.execute(s);
+    } catch (CommandValidationException e) {
+      return e.getMessage();
+    }
   }
 }
-
