@@ -7,7 +7,18 @@ import com.terence.parking.parkinglot.VehicleType;
 public class EnterCommand implements Command {
 
   @Override
-  public void validate(String[] args) throws CommandValidationException {}
+  public void validate(String[] args) throws CommandValidationException {
+    if (args.length != 4) {
+      throw new CommandValidationException("Invalid number of arguments. Expected 3 but got " + (args.length - 1) + ".");
+    }
+
+    try {
+      String timestamp = args[3];
+      Long.valueOf(timestamp);
+    } catch (NumberFormatException e) {
+      throw new CommandValidationException("Invalid timestamp format.");
+    }
+  }
 
   @Override
   public String execute(String[] args) {

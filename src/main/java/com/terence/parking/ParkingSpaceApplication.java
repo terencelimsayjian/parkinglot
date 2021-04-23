@@ -35,14 +35,22 @@ public class ParkingSpaceApplication {
         e.printStackTrace();
       }
 
-      reader.lines().map(ParkingSpaceApplication::processLine).forEach(System.out::println);
+      String line;
+      while ((line = reader.readLine()) != null) {
+        try {
+          System.out.println(processLine(line));
+        } catch (CommandValidationException e) {
+          System.out.println(e.getMessage());
+          break;
+        }
+      }
 
     } catch (IOException e) {
       System.out.println("Something went wrong. Enter absolute path to file.");
     }
   }
 
-  private static String processLine(String input) {
+  private static String processLine(String input) throws CommandValidationException {
     String[] split = input.split(" ");
     String userInstruction = split[0];
 
@@ -53,11 +61,7 @@ public class ParkingSpaceApplication {
       command = new ExitCommand();
     }
 
-    try {
-      command.validate(split);
-      return command.execute(split);
-    } catch (CommandValidationException e) {
-      return e.getMessage();
-    }
+    command.validate(split);
+    return command.execute(split);
   }
 }
