@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class BaseVehicleParkingLotTest {
 
@@ -15,13 +18,8 @@ class BaseVehicleParkingLotTest {
 
   @BeforeEach
   void setUp() {
-    mockFeeCalculator =
-        new FeeCalculator() {
-          @Override
-          public BigDecimal calculate(long startTimeEpochSeconds, long endTimeEpochSeconds) {
-            return BigDecimal.TEN;
-          }
-        };
+    mockFeeCalculator = mock(FeeCalculator.class);
+    when(mockFeeCalculator.calculate(anyLong(), anyLong())).thenReturn(BigDecimal.TEN);
   }
 
   @Test

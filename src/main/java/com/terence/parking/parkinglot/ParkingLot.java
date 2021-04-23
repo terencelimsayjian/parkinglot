@@ -55,7 +55,6 @@ public class ParkingLot {
         return motorCycleParkingLot;
       default:
         return carParkingLot;
-        // TODO: Throw new exception
     }
   }
 }
