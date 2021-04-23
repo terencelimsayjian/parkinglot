@@ -1,5 +1,7 @@
 package com.terence.parking;
 
+import com.terence.parking.command.CommandValidationException;
+import com.terence.parking.command.EnterCommand;
 import com.terence.parking.feecalculation.FeeCalculator;
 import com.terence.parking.feecalculation.HourlyFeeCalculator;
 import com.terence.parking.parkinglot.BaseVehicleParkingLot;
@@ -60,22 +62,19 @@ public class ParkingSpaceApplication {
     String output = "";
 
     if (command.equalsIgnoreCase(ENTER)) {
-      String vehicleType = s[1];
-      String vehicleNumber = s[2];
-      String timestamp = s[3];
-
-      VehicleType vehicle = VehicleType.valueOf(vehicleType.toUpperCase());
+      EnterCommand enterCommand = new EnterCommand();
 
       try {
-        String lotId = ParkingLot.park(vehicleNumber, timestamp, vehicle);
-        output = "Accept " + lotId;
-      } catch (ParkingLotFullException e) {
-        output = "Reject";
+        enterCommand.validate(s);
+        output = enterCommand.execute(s);
+      } catch (CommandValidationException e) {
+        output = e.getMessage();
       }
 
     } else if (command.equalsIgnoreCase(EXIT)) {
       String vehicleNumber = s[1];
       String timestamp = s[2];
+
 
       long endingTimestamp = Long.parseLong(timestamp);
       ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber, endingTimestamp);
