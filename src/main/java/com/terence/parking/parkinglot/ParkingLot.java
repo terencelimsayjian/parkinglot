@@ -5,6 +5,7 @@ import java.util.Map;
 
 import static com.terence.parking.parkinglot.ParkingLotException.PARKING_LOT_NOT_INITIALISED;
 import static com.terence.parking.parkinglot.ParkingLotException.VEHICLE_NUMBER_ALREADY_EXISTS;
+import static com.terence.parking.parkinglot.ParkingLotException.VEHICLE_NUMBER_DOES_NOT_EXIST;
 
 public class ParkingLot {
   private static Map<String, VehicleType> vehicleLookup;
@@ -23,7 +24,7 @@ public class ParkingLot {
   }
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
-      throws ParkingLotFullException, ParkingLotException {
+      throws ParkingLotFullException {
     if (!isInitialised) {
       throw new ParkingLotException(PARKING_LOT_NOT_INITIALISED);
     }
@@ -37,10 +38,13 @@ public class ParkingLot {
     return park;
   }
 
-  public static ParkingSummary exit(String vehicleNumber, long endTimeEpochSeconds)
-      throws ParkingLotException {
+  public static ParkingSummary exit(String vehicleNumber, long endTimeEpochSeconds) {
     if (!isInitialised) {
       throw new ParkingLotException(PARKING_LOT_NOT_INITIALISED);
+    }
+
+    if (!vehicleLookup.containsKey(vehicleNumber)) {
+      throw new ParkingLotException(VEHICLE_NUMBER_DOES_NOT_EXIST);
     }
 
     VehicleType vehicleType = vehicleLookup.get(vehicleNumber);

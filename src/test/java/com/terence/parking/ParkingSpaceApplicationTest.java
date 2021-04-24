@@ -110,13 +110,24 @@ class ParkingSpaceApplicationTest {
   }
 
   @Test
-  void shouldStopProcessingAndThrowVehicleNumberAlreadyExists() throws Exception {
+  void shouldStopProcessingIfParkingVehicleNumberThatAlreadyExists() throws Exception {
     String testPath = getAbsolutePathToResource("invalid_test_input_5.txt");
 
     ParkingSpaceApplication.main(new String[] {testPath});
 
     String expected = "Accept MotorcycleLot1\n" +
                       "Line 3: Vehicle number already exists.\n";
+
+    assertEquals(expected, outContent.toString());
+  }
+
+  @Test
+  void shouldStopProcessingIfExitingVehicleNumberThatDoesNotExist() throws Exception {
+    String testPath = getAbsolutePathToResource("invalid_test_input_6.txt");
+
+    ParkingSpaceApplication.main(new String[] {testPath});
+
+    String expected = "Line 2: Vehicle number does not exist.\n";
 
     assertEquals(expected, outContent.toString());
   }
