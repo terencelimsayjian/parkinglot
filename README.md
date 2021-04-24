@@ -19,4 +19,3 @@
 # Run
 java -jar build/libs/zendesk_parking_system.jar <path_to_input_file>
 ```
-

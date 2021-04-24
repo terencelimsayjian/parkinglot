@@ -89,4 +89,14 @@ class ParkingLotTest {
 
     assertEquals("Vehicle number does not exist.", e.getMessage());
   }
+
+  @Test
+  void shouldThrowParkingLotExceptionIfInitialiseParkingLotASecondTime() {
+    ParkingLot.initialise(carLot, motorcycleLot);
+
+    ParkingLotException e =
+        assertThrows(ParkingLotException.class, () -> ParkingLot.initialise(carLot, motorcycleLot));
+
+    assertEquals("Parking Lot already initialised.", e.getMessage());
+  }
 }

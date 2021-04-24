@@ -3,6 +3,7 @@ package com.terence.parking.parkinglot;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.terence.parking.parkinglot.ParkingLotException.PARKING_LOT_ALREADY_INITIALISED;
 import static com.terence.parking.parkinglot.ParkingLotException.PARKING_LOT_NOT_INITIALISED;
 import static com.terence.parking.parkinglot.ParkingLotException.VEHICLE_NUMBER_ALREADY_EXISTS;
 import static com.terence.parking.parkinglot.ParkingLotException.VEHICLE_NUMBER_DOES_NOT_EXIST;
@@ -17,6 +18,10 @@ public class ParkingLot {
   private ParkingLot() {}
 
   public static void initialise(VehicleParkingLot carLot, VehicleParkingLot motorCycleLot) {
+    if (isInitialised) {
+      throw new ParkingLotException(PARKING_LOT_ALREADY_INITIALISED);
+    }
+
     vehicleLookup = new HashMap<>();
     carParkingLot = carLot;
     motorCycleParkingLot = motorCycleLot;

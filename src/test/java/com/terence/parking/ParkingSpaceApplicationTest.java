@@ -132,6 +132,17 @@ class ParkingSpaceApplicationTest {
     assertEquals(expected, outContent.toString());
   }
 
+  @Test
+  void shouldStopProcessingIfParkingLotInitialisedASecondTime() throws Exception {
+    String testPath = getAbsolutePathToResource("invalid_test_input_7.txt");
+
+    ParkingSpaceApplication.main(new String[] {testPath});
+
+    String expected = "Line 2: Parking Lot already initialised.\n";
+
+    assertEquals(expected, outContent.toString());
+  }
+
   private String getAbsolutePathToResource(String resourceName) throws Exception {
     ClassLoader classLoader = getClass().getClassLoader();
     URL resource = classLoader.getResource(resourceName);
