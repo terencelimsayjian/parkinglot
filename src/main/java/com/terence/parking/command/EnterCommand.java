@@ -7,7 +7,6 @@ import com.terence.parking.validator.Validator;
 import com.terence.parking.validator.ValidationException;
 
 public class EnterCommand implements Command {
-
   @Override
   public void validate(String[] args) throws CommandValidationException {
     try {

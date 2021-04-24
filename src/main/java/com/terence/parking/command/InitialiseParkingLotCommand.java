@@ -15,7 +15,6 @@ public class InitialiseParkingLotCommand implements Command {
 
   @Override
   public void validate(String[] args) throws CommandValidationException {
-
     try {
       Validator.validateArgsLength(args, 2);
       Validator.validateInteger(args[0]);
