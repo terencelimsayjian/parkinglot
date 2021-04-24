@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -57,13 +58,25 @@ class ParkingLotTest {
   @Test
   void shouldThrowParkingLotNotInitialisedExceptionWhenParkingInUninitialisedParkingLot() {
     assertThrows(
-        ParkingLotNotInitialisedException.class,
+        ParkingLotException.class,
         () -> ParkingLot.park("carNumber", "carTimestamp", VehicleType.CAR));
   }
 
   @Test
   void shouldThrowParkingLotNotInitialisedExceptionWhenExitingUninitialisedParkingLot() {
-    assertThrows(
-        ParkingLotNotInitialisedException.class, () -> ParkingLot.exit("carNumber", 88888888L));
+    assertThrows(ParkingLotException.class, () -> ParkingLot.exit("carNumber", 88888888L));
+  }
+
+  @Test
+  void shouldThrowParkingLotExceptionWhenParkingAnExistingVehicleNumber() throws Exception {
+    ParkingLot.initialise(carLot, motorcycleLot);
+
+    ParkingLot.park("carNumber", "carTimestamp", VehicleType.CAR);
+    ParkingLotException e =
+        assertThrows(
+            ParkingLotException.class,
+            () -> ParkingLot.park("carNumber", "carTimestamp", VehicleType.CAR));
+
+    assertEquals("Vehicle number already exists.", e.getMessage());
   }
 }

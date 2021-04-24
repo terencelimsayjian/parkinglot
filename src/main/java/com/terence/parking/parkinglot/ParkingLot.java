@@ -3,6 +3,9 @@ package com.terence.parking.parkinglot;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.terence.parking.parkinglot.ParkingLotException.PARKING_LOT_NOT_INITIALISED;
+import static com.terence.parking.parkinglot.ParkingLotException.VEHICLE_NUMBER_ALREADY_EXISTS;
+
 public class ParkingLot {
   private static Map<String, VehicleType> vehicleLookup;
 
@@ -20,9 +23,13 @@ public class ParkingLot {
   }
 
   public static String park(String vehicleNumber, String timestamp, VehicleType vehicleTypeEnum)
-      throws ParkingLotFullException, ParkingLotNotInitialisedException {
+      throws ParkingLotFullException, ParkingLotException {
     if (!isInitialised) {
-      throw new ParkingLotNotInitialisedException();
+      throw new ParkingLotException(PARKING_LOT_NOT_INITIALISED);
+    }
+
+    if (vehicleLookup.containsKey(vehicleNumber)) {
+      throw new ParkingLotException(VEHICLE_NUMBER_ALREADY_EXISTS);
     }
 
     String park = getVehicleParkingLot(vehicleTypeEnum).park(vehicleNumber, timestamp);
@@ -31,9 +38,9 @@ public class ParkingLot {
   }
 
   public static ParkingSummary exit(String vehicleNumber, long endTimeEpochSeconds)
-      throws ParkingLotNotInitialisedException {
+      throws ParkingLotException {
     if (!isInitialised) {
-      throw new ParkingLotNotInitialisedException();
+      throw new ParkingLotException(PARKING_LOT_NOT_INITIALISED);
     }
 
     VehicleType vehicleType = vehicleLookup.get(vehicleNumber);

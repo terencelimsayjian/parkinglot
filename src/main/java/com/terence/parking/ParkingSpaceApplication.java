@@ -6,7 +6,7 @@ import com.terence.parking.command.EnterCommand;
 import com.terence.parking.command.ExitCommand;
 import com.terence.parking.command.InitialiseParkingLotCommand;
 import com.terence.parking.feecalculation.HourlyFeeCalculator;
-import com.terence.parking.parkinglot.ParkingLotNotInitialisedException;
+import com.terence.parking.parkinglot.ParkingLotException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,11 +38,8 @@ public class ParkingSpaceApplication {
           }
 
           lineNumber++;
-        } catch (CommandValidationException e) {
+        } catch (CommandValidationException | ParkingLotException e) {
           System.out.println(displayLine(lineNumber) + e.getMessage());
-          break;
-        } catch (ParkingLotNotInitialisedException e) {
-          System.out.println(displayLine(lineNumber) + "Parking Lot not initialised.");
           break;
         }
       }
