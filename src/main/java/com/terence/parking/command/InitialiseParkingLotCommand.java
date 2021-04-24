@@ -1,17 +1,22 @@
 package com.terence.parking.command;
 
-import com.terence.parking.feecalculation.HourlyFeeCalculator;
+import com.terence.parking.feecalculation.FeeCalculator;
 import com.terence.parking.parkinglot.BaseVehicleParkingLot;
 import com.terence.parking.parkinglot.ParkingLot;
 import com.terence.parking.parkinglot.VehicleType;
 import com.terence.parking.validator.ValidationException;
 import com.terence.parking.validator.Validator;
 
-import java.math.BigDecimal;
-
 public class InitialiseParkingLotCommand implements Command {
   public static final String CAR_LOT_ID_PREFIX = "CarLot";
   public static final String MOTORCYCLE_LOT_ID_PREFIX = "MotorcycleLot";
+  private final FeeCalculator carFeeCalculator;
+  private final FeeCalculator motorcycleFeeCalculator;
+
+  public InitialiseParkingLotCommand(FeeCalculator carFeeCalculator, FeeCalculator motorcycleFeeCalculator) {
+    this.carFeeCalculator = carFeeCalculator;
+    this.motorcycleFeeCalculator = motorcycleFeeCalculator;
+  }
 
   @Override
   public void validate(String[] args) throws CommandValidationException {
@@ -34,12 +39,12 @@ public class InitialiseParkingLotCommand implements Command {
             carCapacity,
             CAR_LOT_ID_PREFIX,
             VehicleType.CAR,
-            new HourlyFeeCalculator(BigDecimal.valueOf(2))),
+            carFeeCalculator),
         new BaseVehicleParkingLot(
             motorcycleCapacity,
             MOTORCYCLE_LOT_ID_PREFIX,
             VehicleType.MOTORCYCLE,
-            new HourlyFeeCalculator(BigDecimal.ONE)));
+            motorcycleFeeCalculator));
 
     return "";
   }

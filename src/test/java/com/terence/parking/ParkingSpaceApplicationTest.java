@@ -99,6 +99,17 @@ class ParkingSpaceApplicationTest {
     assertEquals(expected, outContent.toString());
   }
 
+  @Test
+  void shouldStopProcessingAndThrowInvalidCommandError() throws Exception {
+    String testPath = getAbsolutePathToResource("invalid_test_input_4.txt");
+
+    ParkingSpaceApplication.main(new String[] {testPath});
+
+    String expected = "Line 2: Invalid command.\n";
+
+    assertEquals(expected, outContent.toString());
+  }
+
   private String getAbsolutePathToResource(String resourceName) throws URISyntaxException {
     ClassLoader classLoader = getClass().getClassLoader();
     URL resource = classLoader.getResource(resourceName);
