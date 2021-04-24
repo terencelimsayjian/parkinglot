@@ -9,7 +9,6 @@ class EnterCommandTest {
 
   @Test
   void shouldThrowValidationExceptionIfLessThanFourArguments() {
-
     Command enterCommand = new EnterCommand();
 
     String[] args = {"ENTER"};
