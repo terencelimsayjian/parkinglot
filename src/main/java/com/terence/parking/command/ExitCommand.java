@@ -5,6 +5,8 @@ import com.terence.parking.parkinglot.ParkingSummary;
 import com.terence.parking.validator.ValidationException;
 import com.terence.parking.validator.Validator;
 
+import java.math.RoundingMode;
+
 public class ExitCommand implements Command {
   @Override
   public void validate(String[] args) throws CommandValidationException {
@@ -23,6 +25,6 @@ public class ExitCommand implements Command {
 
     long endingTimestamp = Long.parseLong(timestamp);
     ParkingSummary parkingSummary = ParkingLot.exit(vehicleNumber, endingTimestamp);
-    return parkingSummary.getLotId() + " " + parkingSummary.getParkingFee().setScale(0);
+    return parkingSummary.getLotId() + " " + parkingSummary.getParkingFee().setScale(0, RoundingMode.HALF_UP);
   }
 }

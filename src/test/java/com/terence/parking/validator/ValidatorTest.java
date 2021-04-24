@@ -3,14 +3,16 @@ package com.terence.parking.validator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ValidatorTest {
 
   @Nested
   class ArgsLengthValidator {
     @Test
-    void shouldHandleNullInput() throws Exception {
+    void shouldHandleNullInput() {
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateArgsLength(null, 1));
 
@@ -18,7 +20,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldThrowExceptionIfLessThanCorrectArgs() throws Exception {
+    void shouldThrowExceptionIfLessThanCorrectArgs() {
       String[] input = new String[] {"1"};
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateArgsLength(input, 2));
@@ -27,7 +29,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldThrowExceptionIfMoreThanCorrectArgs() throws Exception {
+    void shouldThrowExceptionIfMoreThanCorrectArgs() {
       String[] input = new String[] {"1", "1", "1"};
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateArgsLength(input, 2));
@@ -36,7 +38,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldNotThrowExceptionIfCorrectArgs() throws Exception {
+    void shouldNotThrowExceptionIfCorrectArgs() {
       String[] input = new String[] {"1", "1", "1"};
       assertDoesNotThrow(() -> Validator.validateArgsLength(input, 3));
     }
@@ -45,7 +47,7 @@ class ValidatorTest {
   @Nested
   class TimestampValidator {
     @Test
-    void shouldHandleNullInput() throws Exception {
+    void shouldHandleNullInput() {
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateTimestamp(null));
 
@@ -53,7 +55,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldThrowValidationExceptionIfCannotBeParsedToLong() throws Exception {
+    void shouldThrowValidationExceptionIfCannotBeParsedToLong() {
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateTimestamp("123456H"));
 
@@ -61,7 +63,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldNotThrowValidationExceptionIfValidLong() throws Exception {
+    void shouldNotThrowValidationExceptionIfValidLong() {
       assertDoesNotThrow(() -> Validator.validateTimestamp("12346"));
     }
   }
@@ -69,7 +71,7 @@ class ValidatorTest {
   @Nested
   class IntegerValidator {
     @Test
-    void shouldHandleNullInput() throws Exception {
+    void shouldHandleNullInput() {
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateInteger(null));
 
@@ -77,7 +79,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldThrowValidationExceptionIfCannotBeParsedToLong() throws Exception {
+    void shouldThrowValidationExceptionIfCannotBeParsedToLong() {
       ValidationException e =
           assertThrows(ValidationException.class, () -> Validator.validateInteger("123456H"));
 
@@ -85,7 +87,7 @@ class ValidatorTest {
     }
 
     @Test
-    void shouldNotThrowValidationExceptionIfValidInteger() throws Exception {
+    void shouldNotThrowValidationExceptionIfValidInteger() {
       assertDoesNotThrow(() -> Validator.validateInteger("12346"));
     }
   }

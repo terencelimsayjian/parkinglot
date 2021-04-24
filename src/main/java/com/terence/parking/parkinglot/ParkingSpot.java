@@ -4,7 +4,7 @@ class ParkingSpot {
 
   private String vehicleNumber;
   private String timestamp;
-  private String id;
+  private final String id;
 
   ParkingSpot(String id) {
     vehicleNumber = null;

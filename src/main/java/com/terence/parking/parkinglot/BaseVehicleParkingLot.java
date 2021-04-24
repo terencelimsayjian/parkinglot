@@ -29,9 +29,9 @@ public class BaseVehicleParkingLot implements VehicleParkingLot {
   }
 
   private ParkingSpot getNextAvailableLot() throws ParkingLotFullException {
-    for (int i = 0; i < parkingSpots.size(); i++) {
-      if (parkingSpots.get(i).isVacant()) {
-        return parkingSpots.get(i);
+    for (ParkingSpot parkingSpot : parkingSpots) {
+      if (parkingSpot.isVacant()) {
+        return parkingSpot;
       }
     }
 
@@ -50,7 +50,7 @@ public class BaseVehicleParkingLot implements VehicleParkingLot {
       ParkingSpot parkingSpot = optionalParkingSpot.get();
 
       BigDecimal parkingFee =
-          feeCalculator.calculate(Long.valueOf(parkingSpot.getTimestamp()), endTimeEpochSeconds);
+          feeCalculator.calculate(Long.parseLong(parkingSpot.getTimestamp()), endTimeEpochSeconds);
 
       ParkingSummary parkingSummary =
           new ParkingSummary(

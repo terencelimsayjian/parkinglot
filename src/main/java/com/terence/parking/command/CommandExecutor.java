@@ -3,9 +3,9 @@ package com.terence.parking.command;
 public class CommandExecutor {
   public static final String ENTER = "ENTER";
   public static final String EXIT = "EXIT";
-  private Command initialiseParkingLotCommand;
-  private Command enterCommand;
-  private Command exitCommand;
+  private final Command initialiseParkingLotCommand;
+  private final Command enterCommand;
+  private final Command exitCommand;
 
   public CommandExecutor(
       Command initialiseParkingLotCommand, Command enterCommand, Command exitCommand) {

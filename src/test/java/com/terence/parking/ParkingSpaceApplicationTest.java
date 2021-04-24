@@ -8,11 +8,10 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ParkingSpaceApplicationTest {
 
@@ -110,11 +109,10 @@ class ParkingSpaceApplicationTest {
     assertEquals(expected, outContent.toString());
   }
 
-  private String getAbsolutePathToResource(String resourceName) throws URISyntaxException {
+  private String getAbsolutePathToResource(String resourceName) throws Exception {
     ClassLoader classLoader = getClass().getClassLoader();
     URL resource = classLoader.getResource(resourceName);
     File file = Paths.get(resource.toURI()).toFile();
-    String pathToTest = file.getAbsolutePath();
-    return pathToTest;
+    return file.getAbsolutePath();
   }
 }
