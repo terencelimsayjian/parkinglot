@@ -1,4 +1,4 @@
-# Zendesk Parking System
+# Parking Lot System
 
 ## Dependencies
 1. [Gradle](https://gradle.org/install/)
@@ -22,7 +22,7 @@
 
 ```sh
 # Run
-java -jar build/libs/zendesk_parking_system.jar <path_to_input_file>
+java -jar build/libs/parking_system.jar <path_to_input_file>
 ```
 
 Sample input file
